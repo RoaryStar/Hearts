@@ -1,0 +1,10 @@
+A log of everyday work.
+
+|===
+|Day|Accomplishments|Concerns|Expectations
+
+|2017-12-16
+|Posted to github
+|I don't have the reqs
+|
+|===
