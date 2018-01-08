@@ -1,11 +1,18 @@
 A log of everyday work.
 
 |===
-|Day|Accomplishments|Concerns|Expectations
+|Day|Time|Accomplishments|Concerns|Expectations
 
-|2017-12-16
+|Sat 2017-12-16
+|1 Hour
 a|Posted to github
 Set up basic game object class (GameObject)
 |I don't have the reqs
 |
+
+|Mon 2018-01-08
+|1 Hour
+a|Basic UML
+|OOP is weird
+|more UML, beginnings of implementation by tomorrow
 |===
