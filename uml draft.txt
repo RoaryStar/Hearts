@@ -1,0 +1,123 @@
+GameObject
+==========
+# location : Point
+# dimensions : Point
+----------
++ set_loc(l : Point)
++ set_loc_x(x : int)
++ set_loc_y(y : int)
++ get_loc() : Point
++ get_loc_x() : int
++ get_loc_y() : int
++ set_dim(d : Point)
++ set_width(w : int)
++ set_height(h : int)
++ get_dim() : Point
++ get_width() : int
++ get_height() : int
+
+
+MovingObject : GameObject
+==========
+- new_location : Point
+- prev_location : Point
+- progress : double
+- expected_time : double
+----------
++ move_to_location(l : Point, time : double)
++ update(elapsed_time : double
+
+Sprite : MovingObject
+==========
+- image : Image
+- img_source : Point
+# layer : int
+----------
++ draw()
++ set_image(i : Image)
++ set_source_coord(s : Point)
++ set_layer(l : int)
++ get_layer() : int
+
+
+Card : Sprite
+==========
+# suit : Suit
+# value : int
+# face_up : boolean
+# selected : boolean
+----------
++ point_value() : int
++ flip()
++ set_face(faceup : boolean)
++ get_face() : boolean
++ get_value() : int
++ get_suit () : Suit
+
+
+Deck : GameObject
+==========
+# cards : Card[0..*]
+----------
++ initialize_as_standard()
++ shuffle()
++ add_card(c : Card)
++ remove_card(c : Card)
++ transfer_card(d : Deck, c : Card)
++ num_cards() : int
++ card(index : int) : Card
++ index(card : Card) : int
+
+
+Pile : GameObject
+==========
+# direction : Direction
+# width : int
+# shown : boolean
+----------
+
+
+Player
+==========
+# player_id : int
+# hand : Pile
+# taken_tricks : Deck
+# points_this_hand : int
+# points_this_game : int
+# game : Game
+----------
+
+
+User : Player
+==========
+----------
+<todo: all user interface things>
+
+
+Ego
+==========
+<todo: figure out what to give this>
+----------
+<todo: figure out interfaces here>
+
+
+AIPlayer : Player
+==========
+# card_counting : double[52][4]
+# ego : Ego
+----------
++ shift_choose()
++ shift_cards()
++ next_move()
+
+
+Game
+==========
+# players : Player[4]
+# hand : int
+# trick_cards : Deck[4]
+# turn : int
+# hearts_broken : boolean
+----------
++ update_game(time_elapsed : double)
++ draw_game()

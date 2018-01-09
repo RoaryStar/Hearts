@@ -15,4 +15,10 @@ Set up basic game object class (GameObject)
 a|Basic UML
 |OOP is weird
 |more UML, beginnings of implementation by tomorrow
+
+|Tues 2018-01-09
+|1 Hour
+a|Finished most UML, structured many basic classes
+|Java is weird
+|Finish structuring classes tomorrow
 |===

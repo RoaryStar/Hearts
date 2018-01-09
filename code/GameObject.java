@@ -1,80 +1,68 @@
 import java.awt.*;
 
-public class GameObject
+public abstract class GameObject
 {
-    protected int x;
-    protected int y;
-    protected int layer;
-    protected int width;
-    protected int height;
+    protected Point location;
+    protected Point dimensions;
     
     public GameObject()
     {
-	x = 0;
-	y = 0;
-	layer = 0;
-	width = 0;
-	height = 0;
+	location = new Point(0,0);
+	dimensions = new Point(1,1);
     }
-    public GameObject(int cx, int cy, int w, int h, int l)
+    public GameObject(Point loc, Point dim)
     {
-	x = cx;
-	y = cy;
-	width = w;
-	height = h;
-	layer = l;
+	location = loc;
+	dimensions = dim;
     }
     
-    public void set_centre(int cx, int cy)
+    public void set_loc(Point l)
     {
-	x = cx;
-	y = cy;
+	location = l;
     }
-    public void set_x(int cx)
+    public void set_loc_x(int x)
     {
-	x = cx;
+	location.x = x;
     }
-    public void set_y(int cy)
+    public void set_loc_y(int y)
     {
-	y = cy;
+	location.y = y;
     }
-    public int get_x()
+    public Point get_loc()
     {
-	return x;
+	return location;
     }
-    public int get_y()
+    public int get_loc_x()
     {
-	return y;
+	return location.x;
     }
-    
-    public void set_layer(int l)
+    public int get_loc_y()
     {
-	layer = l;
-    }
-    public int get_layer()
-    {
-	return l;
+	return location.y;
     }
     
-    public void set_dimensions(int w, int h)
+    public void set_dimensions(Point d)
     {
-	width = w;
-	height = h;
+	dimensions = d;
     }
     public void set_width(int w)
     {
-	width = w;
+	dimensions.x = w;
     }
     public void set_height(int h)
     {
-	height = w;
+	dimensions.y = h;
+    }
+    public Point get_dimensions()
+    {
+	return dimensions;
     }
     public int get_width()
     {
-	return width;
+	return dimensions.x;
     }
     public int get_height()
     {
-	return height;
+	return dimensions.y;
     }
 }
