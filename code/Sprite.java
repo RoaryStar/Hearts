@@ -28,7 +28,16 @@ public abstract class Sprite extends MovingObject
 	layer = lr;
     }
     
-    public abstract void draw(Graphics g);
+    public void draw(Graphics g)
+    {
+	g.drawImage(image,
+	    location.x                 , location.y,
+	    location.x   + dimensions.x, location.y   + dimensions.y,
+	    img_source.x               , img_source.y,
+	    img_source.x + dimensions.x, img_source.y + dimensions.y,
+	    null);
+    }
+    
     public void set_image(Image i)
     {
 	image = i;

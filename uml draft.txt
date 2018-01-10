@@ -33,7 +33,7 @@ Sprite : MovingObject
 - img_source : Point
 # layer : int
 ----------
-+ draw()
++ draw(g : Graphics)
 + set_image(i : Image)
 + set_source_coord(s : Point)
 + set_layer(l : int)
@@ -67,6 +67,7 @@ Deck : GameObject
 + num_cards() : int
 + card(index : int) : Card
 + index(card : Card) : int
++ draw(g : Graphics)
 
 
 Pile : GameObject

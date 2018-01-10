@@ -21,4 +21,10 @@ a|Basic UML
 a|Finished most UML, structured many basic classes
 |Java is weird
 |Finish structuring classes tomorrow
+
+|Wed 2018-01-10
+|1 Hour
+a|Finished card, most of deck
+|Java is horrible
+|Implement deck, structure more classes
 |===
