@@ -72,10 +72,12 @@ Deck : GameObject
 
 Pile : GameObject
 ==========
-# direction : Direction
-# width : int
+# offset : Point
 # shown : boolean
 ----------
++ add_card(c : Card)
++ remove_card(c : Card)
+- update_cards()
 
 
 Player

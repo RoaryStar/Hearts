@@ -4,16 +4,19 @@ public abstract class GameObject
 {
     protected Point location;
     protected Point dimensions;
+    protected int layer;
     
     public GameObject()
     {
 	location = new Point(0,0);
 	dimensions = new Point(1,1);
+	layer = -1;
     }
-    public GameObject(Point loc, Point dim)
+    public GameObject(Point loc, Point dim, int lr)
     {
 	location = loc;
 	dimensions = dim;
+	layer = lr;
     }
     
     public void set_loc(Point l)
@@ -64,5 +67,14 @@ public abstract class GameObject
     public int get_height()
     {
 	return dimensions.y;
+    }
+    
+    public void set_layer(int l)
+    {
+	layer = l;
+    }
+    public int get_layer()
+    {
+	return layer;
     }
 }

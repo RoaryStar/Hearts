@@ -27,4 +27,10 @@ a|Finished most UML, structured many basic classes
 a|Finished card, most of deck
 |Java is horrible
 |Implement deck, structure more classes
+
+|Thurs 2018-01-11
+|1 Hour
+a|Did pile, implemented everything but deck::draw
+|Java is a catastrophe of OOP
+|Begin structuring game/interface classes
 |===

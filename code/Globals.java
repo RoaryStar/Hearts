@@ -13,5 +13,12 @@ public class Globals
     final static int SPADES = 2;
     final static int HEARTS = 3;
     
+    final static int NORTH = 0;
+    final static int EAST = 1;
+    final static int SOUTH = 2;
+    final static int WEST = 3;
+    
     static Vector ERROR_LOG;
+    
+    static Random rand;
 }

@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Deck extends GameObject
 {
-    Vector cards;
+    protected Vector cards;
     
     public Deck()
     {
@@ -11,16 +11,24 @@ public class Deck extends GameObject
     }
     public Deck(Point loc)
     {
-	super(loc, new Point(1,1));
+	super(loc, new Point(1,1), 0);
     }
     
     public void initialize_as_standard()
     {
-	throw new ArithmeticException("Deck::initialize_as_standard not yet implemented!");
+	cards.removeAllElements();
+	for (int i = 0; i < 4; ++i)
+	{
+	    for (int j = 12; j >= 0; --j)
+	    {
+		Card c = new Card(i, j, layer+i*13+j, location);
+		add_card(c);
+	    }
+	}
     }
     public void shuffle()
     {
-	throw new ArithmeticException("Deck::shuffle not yet implemented!");
+	Collections.shuffle(cards, Globals.rand);
     }
     
     public void add_card(Card c)
@@ -28,7 +36,7 @@ public class Deck extends GameObject
 	if (!cards.contains(c))
 	{
 	    cards.add(c);
-	    c.set_loc(location);
+	    c.set_loc(new Point(location.x + num_cards()/10, location.y));
 	}
 	else
 	    Globals.ERROR_LOG.add("Attempted to re-add card to deck!");

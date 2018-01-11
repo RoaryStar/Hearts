@@ -12,25 +12,43 @@ public abstract class MovingObject extends GameObject
 	super();
 	new_loc = new Point(0, 0);
 	prev_loc = new Point(0, 0);
-	progress = 0.0;
+	progress = 2.0;
 	expected_time = 0.0;
     }
-    public MovingObject(Point l, Point d)
+    public MovingObject(Point l, Point d, int lr)
     {
-	super(l, d);
+	super(l, d, lr);
 	new_loc = new Point(0, 0);
 	prev_loc = new Point(0, 0);
-	progress = 0.0;
+	progress = 2.0;
 	expected_time = 0.0;
     }
     
     public void move_to_location(Point l, double time)
     {
-	throw new ArithmeticException("MovingObject::move_to_location not implemented!");
+	prev_loc = location;
+	new_loc = l;
+	expected_time = time;
+	progress = 0.0;
     }
     
     public void update(double time_elapsed)
     {
-	throw new ArithmeticException("MovingObject::update not implemented!");
+	if (progress < 1.0)
+	{
+	    progress += time_elapsed/expected_time;
+	    
+	    if (progress >= 1.0)
+	    {
+		location.setLocation(new_loc);
+	    }
+	    else
+	    {
+		double from = (1.0 + Math.cos(Math.PI * progress)) / 2.0;
+		double to = 1.0 - from;
+		location.x = (int)(prev_loc.x * from + new_loc.x * to);
+		location.y = (int)(prev_loc.y * from + new_loc.y * to);
+	    }
+	}
     }
 }
