@@ -18,6 +18,30 @@ public class Globals
     final static int SOUTH = 2;
     final static int WEST = 3;
     
+    final static Point LOC_PLAYER_NORTH = new Point(0, 0);
+    final static Point LOC_PLAYER_EAST = new Point(0, 0);
+    final static Point LOC_PLAYER_SOUTH = new Point(0, 0);
+    final static Point LOC_PLAYER_WEST = new Point(0, 0);
+    final static Point LOC_PLAYERS[] =
+	    {LOC_PLAYER_SOUTH, LOC_PLAYER_WEST,
+	     LOC_PLAYER_NORTH, LOC_PLAYER_EAST};
+
+    final static Point OFF_PLAYER_NORTH = new Point(0, 0);
+    final static Point OFF_PLAYER_EAST = new Point(0, 0);
+    final static Point OFF_PLAYER_SOUTH = new Point(0, 0);
+    final static Point OFF_PLAYER_WEST = new Point(0, 0);
+    final static Point OFF_PLAYERS[] =
+	    {OFF_PLAYER_SOUTH, OFF_PLAYER_WEST,
+	     OFF_PLAYER_NORTH, OFF_PLAYER_EAST};
+    
+    final static Point LOC_TAKEN_NORTH = new Point(0, 0);
+    final static Point LOC_TAKEN_EAST = new Point(0, 0);
+    final static Point LOC_TAKEN_SOUTH = new Point(0, 0);
+    final static Point LOC_TAKEN_WEST = new Point(0, 0);
+    final static Point LOC_TAKENS[] =
+	    {LOC_TAKEN_SOUTH, LOC_TAKEN_WEST,
+	     LOC_TAKEN_NORTH, LOC_TAKEN_EAST};
+	     
     static Vector ERROR_LOG;
     
     static Random rand;
