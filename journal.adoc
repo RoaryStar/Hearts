@@ -45,4 +45,10 @@ a|Completed most initializations
 a|Completed all planned structures
 |Unplanned things creeping up
 |Get through the base implementations
+
+|Mon 2018-01-15
+|1 Hour
+a|Double buffering, basic painting tested
+|
+|Get the game rules down
 |===
