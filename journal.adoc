@@ -33,4 +33,16 @@ a|Finished card, most of deck
 a|Did pile, implemented everything but deck::draw
 |Java is a catastrophe of OOP
 |Begin structuring game/interface classes
+
+|Fri 2018-01-12
+|1 Hour
+a|Completed most initializations
+|
+|Begin on actual game
+
+|Sun 2018-01-14
+|2 Hours
+a|Completed all planned structures
+|Unplanned things creeping up
+|Get through the base implementations
 |===

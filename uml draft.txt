@@ -89,9 +89,11 @@ Player
 # points_this_game : int
 # game : Game
 ----------
+give_three_cards(int to)
+next_card_trick() : Card
 
 
-User : Player
+UserPlayer : Player
 ==========
 ----------
 <todo: all user interface things>
@@ -114,13 +116,21 @@ AIPlayer : Player
 + next_move()
 
 
+UI
+==========
+----------
+
+
 Game
 ==========
 # players : Player[4]
 # hand : int
 # trick_cards : Deck[4]
+# all_cards : Deck
+# pool : Deck
 # turn : int
 # hearts_broken : boolean
+# user_interface : UI
 ----------
 + update_game(time_elapsed : double)
 + draw_game()
