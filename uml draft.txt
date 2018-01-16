@@ -2,6 +2,7 @@ GameObject
 ==========
 # location : Point
 # dimensions : Point
+# layer : int
 ----------
 + set_loc(l : Point)
 + set_loc_x(x : int)
@@ -15,6 +16,8 @@ GameObject
 + get_dim() : Point
 + get_width() : int
 + get_height() : int
++ set_layer(l : int)
++ get_layer() : int
 
 
 MovingObject : GameObject
@@ -31,13 +34,10 @@ Sprite : MovingObject
 ==========
 - image : Image
 - img_source : Point
-# layer : int
 ----------
 + draw(g : Graphics)
 + set_image(i : Image)
 + set_source_coord(s : Point)
-+ set_layer(l : int)
-+ get_layer() : int
 
 
 Card : Sprite
@@ -67,7 +67,8 @@ Deck : GameObject
 + num_cards() : int
 + card(index : int) : Card
 + index(card : Card) : int
-+ draw(g : Graphics)
++ sort_layer()
++ sort_standard()
 
 
 Pile : GameObject
@@ -91,6 +92,7 @@ Player
 ----------
 give_three_cards(int to)
 next_card_trick() : Card
+get_hand() : Deck
 
 
 UserPlayer : Player
@@ -133,4 +135,4 @@ Game
 # user_interface : UI
 ----------
 + update_game(time_elapsed : double)
-+ draw_game()
++ draw_game(g : Graphics)

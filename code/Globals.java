@@ -19,9 +19,9 @@ public class Globals
 		final static int WEST = 3;
 		
 		final static Point LOC_PLAYER_NORTH = new Point(0, 0);
-		final static Point LOC_PLAYER_EAST = new Point(0, 0);
-		final static Point LOC_PLAYER_SOUTH = new Point(0, 0);
-		final static Point LOC_PLAYER_WEST = new Point(0, 0);
+		final static Point LOC_PLAYER_EAST = new Point(100, 0);
+		final static Point LOC_PLAYER_SOUTH = new Point(100, 100);
+		final static Point LOC_PLAYER_WEST = new Point(0, 100);
 		final static Point LOC_PLAYERS[] =
 				{LOC_PLAYER_SOUTH, LOC_PLAYER_WEST,
 				 LOC_PLAYER_NORTH, LOC_PLAYER_EAST};
@@ -42,7 +42,7 @@ public class Globals
 				{LOC_TAKEN_SOUTH, LOC_TAKEN_WEST,
 				 LOC_TAKEN_NORTH, LOC_TAKEN_EAST};
 				 
-		static Vector ERROR_LOG;
+		static Vector ERROR_LOG = new Vector();
 		
 		static Random rand = new Random();
 		

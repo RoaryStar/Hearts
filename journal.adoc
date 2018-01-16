@@ -51,4 +51,10 @@ a|Completed all planned structures
 a|Double buffering, basic painting tested
 |
 |Get the game rules down
+
+|Tues 2018-01-16
+|1/2 Hour
+a|Some of the rules
+|
+|
 |===

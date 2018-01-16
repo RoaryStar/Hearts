@@ -7,6 +7,7 @@ import javax.imageio.*;
 public class Main extends Applet implements MouseListener, MouseMotionListener
 {
 	Game game;
+	UI ui;
 	
 	Graphics buffer_g;
 	Image offscreen;
@@ -35,6 +36,9 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		
 		addMouseListener (this);
 		addMouseMotionListener (this);
+		
+		//ui = new UI;
+		game = new Game(false, ui);
 	}
 		
 	public void paint (Graphics g)
@@ -44,12 +48,12 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 	
 		buffer_g.clearRect(0, 0, getSize().width, getSize().height);
 		
-		c = new Card(Globals.rand.nextInt(4), Globals.rand.nextInt(13), 0, new Point(50,50));
-		c.draw(buffer_g);
+		game.update_game(0.016);
+		game.draw_game(buffer_g);
 		
 		g.drawImage(offscreen, 0, 0, this);
 		
-		repaint(200);
+		repaint(16);
 	}
 	
 	public void update(Graphics g)

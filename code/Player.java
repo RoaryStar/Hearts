@@ -31,6 +31,10 @@ public abstract class Player
 	public abstract void give_three_cards(int to);
 	public abstract Card next_card_trick();
 	
+	public Deck get_hand()
+	{
+		return hand;
+	}
 	public void play(Card c, Deck to)
 	{
 		hand.transfer_card(to, c);

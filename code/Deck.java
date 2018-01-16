@@ -8,10 +8,12 @@ public class Deck extends GameObject
 	public Deck ()
 	{
 		super ();
+		cards = new Vector();
 	}
 	public Deck (Point loc)
 	{
 		super (loc, new Point (1, 1), 0);
+		cards = new Vector();
 	}
 
 
@@ -37,6 +39,7 @@ public class Deck extends GameObject
 		{
 			cards.add (c);
 			c.set_loc (new Point (location.x + num_cards () / 10, location.y));
+			c.set_layer(layer + num_cards());
 		}
 		else
 			Globals.ERROR_LOG.add ("Attempted to re-add card to deck!");
@@ -71,9 +74,17 @@ public class Deck extends GameObject
 	{
 		return cards.indexOf (c);
 	}
-
-	public void draw (Graphics g)
+	
+	public void sort_layer()
 	{
-		throw new ArithmeticException ("Deck::draw not yet implemented!");
+		Collections.sort(cards, new Comparator() {
+				public int compare(Object o1, Object o2) {
+					return (((Card)o1).get_layer() > ((Card)o2).get_layer())? -1 :
+							((((Card)o1).get_layer() == ((Card)o2).get_layer())? 0 : 1);
+				}
+			});
+	}
+	public void sort_standard()
+	{
 	}
 }
