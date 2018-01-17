@@ -54,6 +54,9 @@ Card : Sprite
 + get_face() : boolean
 + get_value() : int
 + get_suit () : Suit
++ select()
++ deselect()
++ is_selected() : boolean
 
 
 Deck : GameObject
@@ -76,12 +79,14 @@ Deck : GameObject
 Pile : GameObject
 ==========
 # offset : Point
+# selset : Point
 # shown : boolean
 ----------
 + add_card(c : Card)
 + remove_card(c : Card)
 + update_cards()
 + next_pos() : Point
++ set_shown(s : boolean)
 
 
 Player

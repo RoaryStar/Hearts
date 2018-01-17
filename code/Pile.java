@@ -4,21 +4,24 @@ import java.util.*;
 public class Pile extends Deck
 {
 	protected Point offset;
+	protected Point selset;
 	protected boolean shown;
 
 	public Pile ()
 	{
 		super ();
 		offset = new Point (Globals.CARD_DIM.x / 3, 0);
+		selset = new Point (0, Globals.CARD_DIM.y/3);
 		shown = true;
 	}
 
 
-	public Pile (Point loc, Point off, boolean sho)
+	public Pile (Point loc, Point off, Point sel, boolean sho)
 	{
 		super (loc);
 		offset = off;
 		shown = sho;
+		selset = sel;
 	}
 
 
@@ -49,12 +52,14 @@ public class Pile extends Deck
 	{
 		for (int i = 0 ; i < num_cards () ; ++i)
 		{
-			((Card) cards.elementAt (i)).move_to_location (
-							new Point (location.x + i * offset.x,
-								location.y + i * offset.y),
-							0.500);
-			((Card) cards.elementAt (i)).set_face (shown);
-			((Card) cards.elementAt (i)).set_layer(layer + i);
+			Point des_loc = new Point(location.x + i * offset.x,
+						    location.y + i * offset.y); 
+			if (card(i).is_selected())
+			    des_loc.translate(selset.x, selset.y);
+			if (!card(i).get_loc().equals(des_loc))
+			    card(i).move_to_location(des_loc, 0.500);
+			card(i).set_face (shown);
+			card(i).set_layer(layer + i);
 		}
 	}
 	
@@ -62,5 +67,10 @@ public class Pile extends Deck
 	{
 		return new Point(location.x + offset.x * cards.size(),
 						location.y + offset.y * cards.size());
+	}
+	
+	public void set_shown(boolean s)
+	{
+	    shown = s;
 	}
 }

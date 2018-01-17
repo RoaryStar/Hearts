@@ -30,8 +30,8 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 					Globals.CARD_UP_IMG.getWidth(this) / 13,
 					Globals.CARD_UP_IMG.getHeight(this) / 4);
 			Globals.CARD_DIM_H = new Point(
-					Globals.CARD_DIM.x,
-					Globals.CARD_DIM.y);
+					Globals.CARD_DIM.x/2,
+					Globals.CARD_DIM.y/2);
 		} 
 		catch (IOException e)
 		{

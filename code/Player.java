@@ -21,7 +21,7 @@ public abstract class Player
 	public Player(int id, Game g)
 	{
 		player_id = id;
-		hand = new Pile(Globals.LOC_PLAYERS[id], Globals.OFF_PLAYERS[id], false);
+		hand = new Pile(Globals.LOC_PLAYERS[id], Globals.OFF_PLAYERS[id], Globals.SEL_PLAYERS[id], false);
 		taken_tricks = new Deck(Globals.LOC_TAKENS[id]);
 		points_this_hand = 0;
 		points_this_game = 0;

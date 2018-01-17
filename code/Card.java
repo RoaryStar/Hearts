@@ -32,12 +32,16 @@ public class Card extends Sprite
 	public void set_face (boolean faceup)
 	{
 		face_up = faceup;
+		if (face_up)
+		    set_image(Globals.CARD_UP_IMG);
+		else
+		    set_image(Globals.CARD_DOWN_IMG);
 	}
 
 
 	public void flip ()
 	{
-		face_up = !face_up;
+		set_face(!face_up);
 	}
 
 
@@ -60,5 +64,19 @@ public class Card extends Sprite
 		if (suit == Globals.SPADES && value == 11)
 			return 13;
 		return 0;
+	}
+	
+	public void select()
+	{
+	    selected = true;
+	}
+	public void deselect()
+	{
+	    selected = false;
+	}
+	
+	public boolean is_selected()
+	{
+	    return selected;
 	}
 }

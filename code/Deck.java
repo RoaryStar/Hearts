@@ -42,7 +42,7 @@ public class Deck extends GameObject
 		if (!cards.contains (c))
 		{
 			cards.add (c);
-			c.set_loc (new Point (location.x + num_cards () / 10, location.y));
+			c.set_loc (new Point (location.x + num_cards () / 10 * 2, location.y));
 			c.set_layer(layer + num_cards());
 		}
 		else
@@ -67,10 +67,11 @@ public class Deck extends GameObject
 	}
 	public void transfer_card (Pile p, Card c)
 	{
+		Point new_loc = p.next_pos();
 		p.add_card (c);
 		remove_card (c);
 		c.set_loc (location);
-		c.move_to_location (p.next_pos (), 0.5);
+		c.move_to_location (new_loc, 0.5);
 	}
 
 

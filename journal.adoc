@@ -63,4 +63,10 @@ a|Some of the rules
 a|Things actually display now
 |Don't get distracted by flashiness
 |Work on more rules
+
+|Wed 2018-01-17
+|1 Hour
+a|Made things look better, set up infrastructure for interactions
+|
+|Get flush interactions done later today (?)
 |===
