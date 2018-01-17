@@ -1,0 +1,149 @@
+GameObject
+==========
+# location : Point
+# dimensions : Point
+# layer : int
+----------
++ set_loc(l : Point)
++ set_loc_x(x : int)
++ set_loc_y(y : int)
++ get_loc() : Point
++ get_loc_x() : int
++ get_loc_y() : int
++ set_dim(d : Point)
++ set_width(w : int)
++ set_height(h : int)
++ get_dim() : Point
++ get_width() : int
++ get_height() : int
++ set_layer(l : int)
++ get_layer() : int
+
+
+MovingObject : GameObject
+==========
+- new_location : Point
+- prev_location : Point
+- progress : double
+- expected_time : double
+----------
++ move_to_location(l : Point, time : double)
++ update(elapsed_time : double
+
+Sprite : MovingObject
+==========
+- image : Image
+- img_source : Point
+----------
++ draw(g : Graphics)
++ set_image(i : Image)
++ set_source_coord(s : Point)
++ moving() : boolean
+
+
+Card : Sprite
+==========
+# suit : Suit
+# value : int
+# face_up : boolean
+# selected : boolean
+----------
++ point_value() : int
++ flip()
++ set_face(faceup : boolean)
++ get_face() : boolean
++ get_value() : int
++ get_suit () : Suit
++ select()
++ deselect()
++ is_selected() : boolean
+
+
+Deck : GameObject
+==========
+# cards : Card[0..*]
+----------
++ initialize_as_standard()
++ shuffle()
++ add_card(c : Card)
++ remove_card(c : Card)
++ transfer_card(d : Deck, c : Card)
++ transfer_card(p : Pile, c : Card)
++ num_cards() : int
++ card(index : int) : Card
++ index(card : Card) : int
++ sort_layer()
++ sort_standard()
+
+
+Pile : GameObject
+==========
+# offset : Point
+# selset : Point
+# shown : boolean
+----------
++ add_card(c : Card)
++ remove_card(c : Card)
++ update_cards()
++ next_pos() : Point
++ set_shown(s : boolean)
+
+
+Player
+==========
+# player_id : int
+# hand : Pile
+# taken_tricks : Deck
+# points_this_hand : int
+# points_this_game : int
+# game : Game
+# shift_temp : Card[3]
+----------
++ shift_choose(to : int)
++ shift_cards_setup()
++ shift_cards_shift(to : int)
++ next_card_trick() : Card
++ get_hand() : Pile
+
+
+UserPlayer : Player
+==========
+----------
+<todo: all user interface things>
+
+
+Ego
+==========
+# card_counting : double[52][4]
+----------
+<todo: figure out interfaces here>
+
+
+AIPlayer : Player
+==========
+# ego : Ego
+----------
++ shift_choose()
++ shift_cards()
++ next_move()
+
+
+UI
+==========
+----------
+
+
+Game
+==========
+# players : Player[4]
+# hand : int
+# trick_cards : Deck[4]
+# all_cards : Deck
+# pool : Deck
+# turn : int
+# hearts_broken : boolean
+# user_interface : UI
+----------
++ update_game(time_elapsed : double)
++ draw_game(g : Graphics)
++ get_player(id : int) : Player
