@@ -57,4 +57,10 @@ a|Double buffering, basic painting tested
 a|Some of the rules
 |
 |
+
+|Tues 2018-01-16
+|2 Hours
+a|Things actually display now
+|Don't get distracted by flashiness
+|Work on more rules
 |===

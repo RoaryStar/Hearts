@@ -32,6 +32,10 @@ public class Deck extends GameObject
 	public void shuffle ()
 	{
 		Collections.shuffle (cards, Globals.rand);
+		for (int i = 0; i < cards.size(); ++i)
+		{
+			((Card)cards.elementAt(i)).set_layer(layer + i);
+		}
 	}
 	public void add_card (Card c)
 	{
@@ -49,7 +53,6 @@ public class Deck extends GameObject
 		if (cards.contains (c))
 		{
 			cards.remove (c);
-			c.set_loc (location);
 		}
 		else
 			Globals.ERROR_LOG.add ("Attempted to remove nonexistent card from deck!");
@@ -58,7 +61,16 @@ public class Deck extends GameObject
 	{
 		d.add_card (c);
 		remove_card (c);
-		c.move_to_location (d.get_loc (), 500.0);
+		Point new_loc = c.get_loc();
+		c.set_loc (location);
+		c.move_to_location (new_loc, 0.5);
+	}
+	public void transfer_card (Pile p, Card c)
+	{
+		p.add_card (c);
+		remove_card (c);
+		c.set_loc (location);
+		c.move_to_location (p.next_pos (), 0.5);
 	}
 
 
@@ -79,12 +91,20 @@ public class Deck extends GameObject
 	{
 		Collections.sort(cards, new Comparator() {
 				public int compare(Object o1, Object o2) {
-					return (((Card)o1).get_layer() > ((Card)o2).get_layer())? -1 :
+					return (((Card)o1).get_layer() < ((Card)o2).get_layer())? -1 :
 							((((Card)o1).get_layer() == ((Card)o2).get_layer())? 0 : 1);
 				}
 			});
 	}
 	public void sort_standard()
 	{
+		Collections.sort(cards, new Comparator() {
+				public int compare(Object o1, Object o2) {
+					return (((Card)o1).get_suit() < ((Card)o2).get_suit())? -1 :
+							((((Card)o1).get_suit() == ((Card)o2).get_suit())? 
+							((((Card)o1).get_value()+12)%13 < (((Card)o2).get_value()+12)%13)? -1 :
+							((((Card)o1).get_value() == ((Card)o2).get_value())? 0 : 1) : 1);
+				}
+			});
 	}
 }

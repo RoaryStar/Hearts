@@ -38,6 +38,7 @@ Sprite : MovingObject
 + draw(g : Graphics)
 + set_image(i : Image)
 + set_source_coord(s : Point)
++ moving() : boolean
 
 
 Card : Sprite
@@ -64,6 +65,7 @@ Deck : GameObject
 + add_card(c : Card)
 + remove_card(c : Card)
 + transfer_card(d : Deck, c : Card)
++ transfer_card(p : Pile, c : Card)
 + num_cards() : int
 + card(index : int) : Card
 + index(card : Card) : int
@@ -78,7 +80,8 @@ Pile : GameObject
 ----------
 + add_card(c : Card)
 + remove_card(c : Card)
-- update_cards()
++ update_cards()
++ next_pos() : Point
 
 
 Player
@@ -92,7 +95,7 @@ Player
 ----------
 give_three_cards(int to)
 next_card_trick() : Card
-get_hand() : Deck
+get_hand() : Pile
 
 
 UserPlayer : Player

@@ -18,7 +18,7 @@ public class Game
 	{
 		state = Globals.STATE_BEGIN;
 
-		pool = new Deck ();
+		pool = new Deck (new Point(400,300));
 		all_cards = new Deck ();
 		all_cards.initialize_as_standard ();
 
@@ -46,6 +46,7 @@ public class Game
 
 	void update_game (double time_elapsed)
 	{
+		//System.out.println(state);
 		for (int i = 0; i < 52; ++i)
 		{
 			all_cards.card(i).update(time_elapsed);
@@ -58,17 +59,24 @@ public class Game
 					pool.add_card(all_cards.card(i));
 				}
 				state = Globals.STATE_SHUFFLE;
+				timer = 0;
 				break;
 			case Globals.STATE_SHUFFLE:
+				++timer;
+				
+				if (timer > 60)
+				{
 				pool.shuffle ();
 
 				state = Globals.STATE_DEAL;
 				timer = 0;
+				}
 				break;
 			case Globals.STATE_DEAL:
 				if (pool.num_cards () > 0)
 				{
 					pool.transfer_card (players [timer % 4].get_hand (), pool.card (pool.num_cards () - 1));
+					//System.out.println(pool.num_cards());
 					timer += 1;
 				}
 				else
@@ -79,6 +87,22 @@ public class Game
 
 				break;
 			case Globals.STATE_FLUSH:
+				boolean cont = true;
+				for (int i = 0; i < 52; ++i)
+					if (all_cards.card(i).moving())
+					{
+						cont = false;
+						break;
+					}
+				if (cont)
+				{
+					for (int i = 0; i < 4; ++i)
+					{
+						players[i].get_hand().sort_standard();
+						players[i].get_hand().update_cards();
+					}
+					state = Globals.STATE_TRICK;
+				}
 				break;
 			case Globals.STATE_TRICK:
 				break;

@@ -11,10 +11,11 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 	
 	Graphics buffer_g;
 	Image offscreen;
-	Card c;
 	
 	long te = System.currentTimeMillis();
 		
+	Deck d;
+	Deck e;
 	public void init ()
 	{
 		offscreen = createImage(getSize().width, getSize().height);
@@ -28,6 +29,9 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 			Globals.CARD_DIM = new Point(
 					Globals.CARD_UP_IMG.getWidth(this) / 13,
 					Globals.CARD_UP_IMG.getHeight(this) / 4);
+			Globals.CARD_DIM_H = new Point(
+					Globals.CARD_DIM.x,
+					Globals.CARD_DIM.y);
 		} 
 		catch (IOException e)
 		{
@@ -39,6 +43,10 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		
 		//ui = new UI;
 		game = new Game(false, ui);
+		
+		d = new Deck(new Point(0,0));
+		d.initialize_as_standard();
+		e = new Deck(new Point(700,500));
 	}
 		
 	public void paint (Graphics g)
@@ -47,6 +55,8 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		te = System.currentTimeMillis();
 	
 		buffer_g.clearRect(0, 0, getSize().width, getSize().height);
+		buffer_g.setColor(new Color(0, 127, 0));
+		buffer_g.fillRect(0, 0, getSize().width, getSize().height);
 		
 		game.update_game(0.016);
 		game.draw_game(buffer_g);
@@ -61,11 +71,16 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		long l = System.currentTimeMillis() - te;
 		try
 		{
-			if (l < 200)
-				Thread.sleep(200-l);
+			if (l < 16)
+				Thread.sleep(16-l);
 		}
 		catch (InterruptedException e)
 		{
+		}
+		while (Globals.ERROR_LOG.size() > 0)
+		{
+			System.out.println(Globals.ERROR_LOG.elementAt(0));
+			Globals.ERROR_LOG.remove(0);
 		}
 		paint(g);
 	}
