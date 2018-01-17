@@ -97,10 +97,13 @@ Player
 # points_this_hand : int
 # points_this_game : int
 # game : Game
+# shift_temp : Card[3]
 ----------
-give_three_cards(int to)
-next_card_trick() : Card
-get_hand() : Pile
++ shift_choose(to : int)
++ shift_cards_setup()
++ shift_cards_shift(to : int)
++ next_card_trick() : Card
++ get_hand() : Pile
 
 
 UserPlayer : Player
@@ -111,14 +114,13 @@ UserPlayer : Player
 
 Ego
 ==========
-<todo: figure out what to give this>
+# card_counting : double[52][4]
 ----------
 <todo: figure out interfaces here>
 
 
 AIPlayer : Player
 ==========
-# card_counting : double[52][4]
 # ego : Ego
 ----------
 + shift_choose()
@@ -144,3 +146,4 @@ Game
 ----------
 + update_game(time_elapsed : double)
 + draw_game(g : Graphics)
++ get_player(id : int) : Player

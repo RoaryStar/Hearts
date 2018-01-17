@@ -13,6 +13,7 @@ public class Game
     protected UI user_interface;
     protected int state;
     protected int timer;
+    protected int part;
 
     Game (boolean human_player, UI ui)
     {
@@ -39,7 +40,7 @@ public class Game
 	    players [i].get_hand ().set_layer (100);
 	    players [i].get_hand ().set_shown (false);
 	}
-	hand_num = 0;
+	hand_num = 1;
 	turn_num = 0;
 	lead = 0;
 	hearts_broken = false;
@@ -108,13 +109,62 @@ public class Game
 			}
 			state = Globals.STATE_FLUSH;
 			timer = 0;
+			part = -1;
 		    }
 		}
 		break;
 	    case Globals.STATE_FLUSH:
-		if (hand_num % 4 != 0)
+		if (hand_num % 4 == 0)
+		    state = Globals.STATE_TRICK;
+		++timer;
+		if (part == -1 && timer > 60)
 		{
-		    
+		    ++part;
+		    timer = 0;
+		}
+		else if (part == 0)
+		{
+		    for (int i = 0; i < 4; ++i)
+		    {
+			players[i].shift_choose((i+hand_num)%4);
+		    }
+		    ++part;
+		    timer = 0;
+		}
+		else if (part == 1 && players[0].shift_chosen() && timer > 60)
+		{
+		    ++part;
+		    timer = 0;
+		}
+		else if (part == 2)
+		{
+		    for (int i = 0; i < 4; ++i)
+			players[i].shift_cards_setup();
+		    for (int i = 0; i < 4; ++i)
+			players[i].shift_cards_shift((i+hand_num)%4);
+		    ++part;
+		    timer = 0;
+		}
+		else if (part == 3 && timer > 60)
+		{
+		    ++part;
+		    timer = 0;
+		}
+		else if (part == 4)
+		{
+		    for (int i = 0; i < 4; ++i)
+		    {
+			players[i].get_hand().sort_standard();
+			players[i].get_hand().update_cards();
+		    }
+		    ++part;
+		    timer = 0;
+		}
+		else if (part == 5 && timer > 60)
+		{
+		    state = Globals.STATE_TRICK;
+		    part = 0;
+		    timer = 0;
 		}
 		break;
 	    case Globals.STATE_TRICK:
@@ -134,5 +184,10 @@ public class Game
 	{
 	    all_cards.card (i).draw (g);
 	}
+    }
+    
+    public Player get_player(int id)
+    {
+	return players[id];
     }
 }

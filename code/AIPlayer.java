@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class AIPlayer extends Player
 {
+	
 	public AIPlayer()
 	{
 		super();
@@ -11,9 +12,24 @@ public class AIPlayer extends Player
 		super(id, g);
 	}
 	
-	public void give_three_cards(int to)
+	public void shift_choose(int to)
 	{
-		throw new ArithmeticException("AIPlayer::give_three_cards not yet implemented!");
+		if(!shift_chosen())
+		{
+		    for (int i = 0; i < 3; ++i)
+		    {
+			int j = Globals.rand.nextInt(13);
+			if (hand.card(j).is_selected())
+			{
+			    --i;
+			}
+			else
+			{
+			    hand.card(j).select();
+			}
+		    }
+		    hand.update_cards();
+		}
 	}
 	public Card next_card_trick()
 	{

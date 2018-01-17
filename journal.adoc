@@ -69,4 +69,10 @@ a|Things actually display now
 a|Made things look better, set up infrastructure for interactions
 |
 |Get flush interactions done later today (?)
+
+|Wed 2018-01-17
+|1 Hour
+a|Flushes work now
+|
+|Try and do tricks
 |===
