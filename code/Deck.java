@@ -81,6 +81,8 @@ public class Deck extends GameObject
 	}
 	public Card card (int index)
 	{
+		if (index >= num_cards())
+		    return null;
 		return (Card) cards.elementAt (index);
 	}
 	public int index (Card c)
@@ -107,5 +109,15 @@ public class Deck extends GameObject
 							((((Card)o1).get_value() == ((Card)o2).get_value())? 0 : 1) : 1);
 				}
 			});
+	}
+	
+	public int num_suit(int suit)
+	{
+	    int ret = 0;
+	    for (int i = 0; i < num_cards(); ++i)
+	    {
+		if (card(i).get_suit() == suit) ++ret;
+	    }
+	    return ret;
 	}
 }

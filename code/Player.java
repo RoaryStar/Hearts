@@ -26,6 +26,7 @@ public abstract class Player
 	player_id = id;
 	hand = new Pile (Globals.LOC_PLAYERS [id], Globals.OFF_PLAYERS [id], Globals.SEL_PLAYERS [id], false);
 	taken_tricks = new Deck (Globals.LOC_TAKENS [id]);
+	taken_tricks.set_layer(0);
 	points_this_hand = 0;
 	points_this_game = 0;
 	game = g;
@@ -75,11 +76,16 @@ public abstract class Player
     }
 
 
-    public abstract Card next_card_trick ();
+    public abstract Card next_card_trick (Card lead);
+    public abstract boolean chosen_trick ();
 
     public Pile get_hand ()
     {
 	return hand;
+    }
+    public Deck get_takens()
+    {
+	return taken_tricks;
     }
 
 

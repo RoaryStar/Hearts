@@ -43,18 +43,18 @@ public class Globals
 		{SEL_PLAYER_SOUTH, SEL_PLAYER_WEST,
 		SEL_PLAYER_NORTH, SEL_PLAYER_EAST};
 
-	final static Point LOC_TAKEN_NORTH = new Point (364, -100);
-	final static Point LOC_TAKEN_EAST = new Point (800, 350);
-	final static Point LOC_TAKEN_SOUTH = new Point (364, 600);
-	final static Point LOC_TAKEN_WEST = new Point (-72, 350);
+	final static Point LOC_TAKEN_NORTH = new Point (364, -110);
+	final static Point LOC_TAKEN_EAST = new Point (810, 250);
+	final static Point LOC_TAKEN_SOUTH = new Point (364, 610);
+	final static Point LOC_TAKEN_WEST = new Point (-82, 250);
 	final static Point LOC_TAKENS[] =
 		{LOC_TAKEN_SOUTH, LOC_TAKEN_WEST,
 		LOC_TAKEN_NORTH, LOC_TAKEN_EAST};
 		
 	final static Point LOC_TRICK_NORTH = new Point (364, 175);
-	final static Point LOC_TRICK_EAST = new Point (310, 350);
+	final static Point LOC_TRICK_EAST = new Point (418, 250);
 	final static Point LOC_TRICK_SOUTH = new Point (364, 325);
-	final static Point LOC_TRICK_WEST = new Point (490, 350);
+	final static Point LOC_TRICK_WEST = new Point (310, 250);
 	final static Point LOC_TRICKS[] =
 		{LOC_TRICK_SOUTH, LOC_TRICK_WEST,
 		LOC_TRICK_NORTH, LOC_TRICK_EAST};
