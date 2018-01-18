@@ -75,4 +75,10 @@ a|Made things look better, set up infrastructure for interactions
 a|Flushes work now
 |
 |Try and do tricks
+
+|Thurs 2018-01-18
+|1/2 Hour
+a|The game works!
+|
+|
 |===

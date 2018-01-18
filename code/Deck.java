@@ -59,10 +59,11 @@ public class Deck extends GameObject
 	}
 	public void transfer_card (Deck d, Card c)
 	{
+		Point old_loc = c.get_loc();
 		d.add_card (c);
 		remove_card (c);
 		Point new_loc = c.get_loc();
-		c.set_loc (location);
+		c.set_loc (old_loc);
 		c.move_to_location (new_loc, 0.5);
 	}
 	public void transfer_card (Pile p, Card c)

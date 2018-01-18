@@ -117,7 +117,7 @@ public class Game
 		}
 		break;
 	    case Globals.STATE_FLUSH:
-		if (hand_num % 4 == 0)
+		if (part == -1 && hand_num % 4 == 0)
 		{
 		    part = 5;
 		    timer = 30;
@@ -187,7 +187,7 @@ public class Game
 		    players[turn].get_hand().transfer_card(
 			    trick_cards[turn],
 			    players[turn].next_card_trick(
-				    trick_cards[(turn+3)%4].card(0)));
+				    trick_cards[(turn-part+4)%4].card(0)));
 		    players[turn].get_hand().update_cards();
 		    trick_cards[turn].card(0).set_face(true);
 		    if (trick_cards[turn].card(0).get_suit() == Globals.HEARTS)
@@ -205,8 +205,8 @@ public class Game
 	    case Globals.STATE_TRICK_END:
 		if (timer == 30)
 		{
-		    int highest = 0;
-		    for (int i = 1; i < 4; ++i)
+		    int highest = turn;
+		    for (int i = 0; i < 4; ++i)
 		    {
 			if (trick_cards[i].card(0).get_suit() ==
 			    trick_cards[turn].card(0).get_suit() &&
@@ -235,6 +235,70 @@ public class Game
 		}
 		break;
 	    case Globals.STATE_HAND_END:
+		if (part == 0)
+		{
+		    for (int i = 0; i < 4; ++i)
+		    {
+			if (players[i].get_takens().num_cards() > 0)
+			{
+			    if (players[i].get_takens().card(0).point_value()>0)
+			    {
+				players[i].get_takens().transfer_card(
+					players[i].get_hand(),
+					players[i].get_takens().card(0));
+			    }
+			    else
+			    {
+				players[i].get_takens().card(0).set_face(false);
+				players[i].get_takens().transfer_card(
+					pool,
+					players[i].get_takens().card(0));
+			    }
+			}
+		    }
+		    if (timer > 52)
+		    {
+			part = 1;
+			timer = -1;
+		    }
+		}
+		else if (part == 1 && timer == 0)
+		{
+		    for (int i = 0; i < 4; ++i)
+		    {
+			players[i].get_hand().set_shown(true);
+			players[i].get_hand().sort_standard();
+			players[i].get_hand().update_cards();
+		    }
+		}
+		else if (part == 1 && timer > 300)
+		{
+		    for (int i = 0; i < 4; ++i)
+		    {
+			if (timer % 2 == 0 && players[i].get_hand().num_cards()>0)
+			{
+			    players[i].get_hand().card(0).set_face(false);
+			    players[i].get_hand().transfer_card(
+				    pool,
+				    players[i].get_hand().card(0));
+			}
+		    }
+		    if (timer > 330)
+		    {
+			for (int i = 1; i < 4; ++i)
+			{
+			    players[i].get_hand().set_shown(false);
+			}
+			part = 2;
+			timer = -1;
+		    }
+		}
+		else if (part == 2)
+		{
+		    ++hand_num;
+		    state = Globals.STATE_SHUFFLE;
+		}
+		++timer;
 		break;
 	}
     }
