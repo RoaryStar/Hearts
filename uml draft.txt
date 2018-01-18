@@ -103,9 +103,9 @@ Player
 + shift_cards_setup()
 + shift_cards_shift(to : int)
 + next_card_trick() : Card
++ chosen_trick() : boolean
 + get_hand() : Pile
-
-
++ get_takens() : Deck
 UserPlayer : Player
 ==========
 ----------
@@ -135,15 +135,19 @@ UI
 
 Game
 ==========
-# players : Player[4]
-# hand : int
+# players : Player[4]]
 # trick_cards : Deck[4]
 # all_cards : Deck
 # pool : Deck
 # turn : int
+# turn_num : int
+# hand_num : int
+# tricks_left : int
 # hearts_broken : boolean
 # user_interface : UI
 ----------
 + update_game(time_elapsed : double)
 + draw_game(g : Graphics)
 + get_player(id : int) : Player
++ broken_hearts() : boolean
++ cur_trick() : int
