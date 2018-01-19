@@ -247,6 +247,14 @@ public class Game
 		{
 		    for (int i = 0; i < 4; ++i)
 		    {
+			players[i].get_takens().sort_standard();
+		    }
+		    ++part;
+		}
+		if (part == 1)
+		{
+		    for (int i = 0; i < 4; ++i)
+		    {
 			if (players[i].get_takens().num_cards() > 0)
 			{
 			    if (players[i].get_takens().card(0).point_value()>0)
@@ -266,20 +274,18 @@ public class Game
 		    }
 		    if (timer > 52)
 		    {
-			part = 1;
+			++part;
 			timer = -1;
 		    }
 		}
-		else if (part == 1 && timer == 0)
+		else if (part == 2 && timer == 0)
 		{
 		    for (int i = 0; i < 4; ++i)
 		    {
 			players[i].get_hand().set_shown(true);
-			players[i].get_hand().sort_standard();
-			players[i].get_hand().update_cards();
 		    }
 		}
-		else if (part == 1 && timer > 300)
+		else if (part == 2 && timer > 300)
 		{
 		    for (int i = 0; i < 4; ++i)
 		    {
@@ -296,11 +302,11 @@ public class Game
 			{
 			    players[i].get_hand().set_shown(false);
 			}
-			part = 2;
+			++part;
 			timer = -1;
 		    }
 		}
-		else if (part == 2)
+		else if (part == 3)
 		{
 		    ++hand_num;
 		    state = Globals.STATE_SHUFFLE;
