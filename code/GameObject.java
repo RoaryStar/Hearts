@@ -104,4 +104,11 @@ public abstract class GameObject
 	{
 		return layer;
 	}
+	
+	public boolean is_inside(Point p)
+	{
+		return (p.x > location.x && p.y > location.y &&
+			p.x < location.x + dimensions.x &&
+			p.y < location.y + dimensions.y);
+	}
 }

@@ -77,7 +77,7 @@ public abstract class Player
 
 
     public abstract Card next_card_trick (Card lead);
-    public abstract boolean chosen_trick ();
+    public abstract boolean chosen_trick (Card lead);
 
     public Pile get_hand ()
     {
@@ -89,8 +89,13 @@ public abstract class Player
     }
 
 
-    public void play (Card c, Deck to)
+    public void play (Deck to, Card c)
     {
 	hand.transfer_card (to, c);
+    }
+    
+    
+    public void handle_input()
+    {
     }
 }

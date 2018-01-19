@@ -13,6 +13,9 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 	Image offscreen;
 	
 	long te = System.currentTimeMillis();
+	
+	final int frames_per_second = 60;
+	final int ms_per_frame = 1000/frames_per_second;
 		
 	Deck d;
 	Deck e;
@@ -41,12 +44,14 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		addMouseListener (this);
 		addMouseMotionListener (this);
 		
-		//ui = new UI;
-		game = new Game(false, ui);
+		ui = new UI();
+		game = new Game(true, ui);
 		
 		d = new Deck(new Point(0,0));
 		d.initialize_as_standard();
 		e = new Deck(new Point(700,500));
+		
+		repaint();
 	}
 		
 	public void paint (Graphics g)
@@ -58,12 +63,10 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		buffer_g.setColor(new Color(0, 127, 0));
 		buffer_g.fillRect(0, 0, getSize().width, getSize().height);
 		
-		game.update_game(0.016);
 		game.draw_game(buffer_g);
 		
-		g.drawImage(offscreen, 0, 0, this);
 		
-		repaint(16);
+		g.drawImage(offscreen, 0, 0, this);
 	}
 	
 	public void update(Graphics g)
@@ -71,8 +74,8 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		long l = System.currentTimeMillis() - te;
 		try
 		{
-			if (l < 16)
-				Thread.sleep(16-l);
+			if (l < ms_per_frame)
+				Thread.sleep(ms_per_frame-l);
 		}
 		catch (InterruptedException e)
 		{
@@ -82,11 +85,19 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 			System.out.println(Globals.ERROR_LOG.elementAt(0));
 			Globals.ERROR_LOG.remove(0);
 		}
+		
+		game.update_game(0.016);
+		ui.update();
+		
 		paint(g);
+		
+		repaint();
 	}
 	
 	public void mouseClicked (MouseEvent e)
 	{
+		if (e.getButton() == MouseEvent.BUTTON1)
+			ui.activate_click(e.getPoint());
 	}
 
 	public void mouseEntered (MouseEvent e)

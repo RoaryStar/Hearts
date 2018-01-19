@@ -18,6 +18,7 @@ GameObject
 + get_height() : int
 + set_layer(l : int)
 + get_layer() : int
++ is_inside(p : Point) : boolean
 
 
 MovingObject : GameObject
@@ -106,10 +107,13 @@ Player
 + chosen_trick() : boolean
 + get_hand() : Pile
 + get_takens() : Deck
++ play(c : Card, to : Deck)
++ handle_input()
+
+
 UserPlayer : Player
 ==========
 ----------
-<todo: all user interface things>
 
 
 Ego
@@ -130,7 +134,12 @@ AIPlayer : Player
 
 UI
 ==========
+click : Point
+ticks_since_last_click : int
 ----------
+activate_click(l : Point)
+get_click() : Point
+update()
 
 
 Game
@@ -139,6 +148,7 @@ Game
 # trick_cards : Deck[4]
 # all_cards : Deck
 # pool : Deck
+# lead : Card
 # turn : int
 # turn_num : int
 # hand_num : int
@@ -151,3 +161,4 @@ Game
 + get_player(id : int) : Player
 + broken_hearts() : boolean
 + cur_trick() : int
++ get_state() : int

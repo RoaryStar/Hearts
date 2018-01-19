@@ -81,4 +81,10 @@ a|Flushes work now
 a|The game works!
 |
 |
+
+|Thurs 2018-01-18
+|1 1/2 Hour
+a|You can play now!
+|DO NOT get distracted
+|Get the point system working
 |===

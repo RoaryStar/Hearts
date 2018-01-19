@@ -6,11 +6,11 @@ public class Game
     protected Deck trick_cards[];
     protected Deck all_cards;
     protected Deck pool;
+    protected Card lead;
     protected int hand_num;
     protected int turn_num;
     protected int tricks_left;
     protected int turn;
-    protected int lead;
     protected boolean hearts_broken;
     protected UI user_interface;
     protected int state;
@@ -42,9 +42,10 @@ public class Game
 	    players [i].get_hand ().set_layer (100);
 	    players [i].get_hand ().set_shown (false);
 	}
+	
 	hand_num = 1;
 	turn_num = 0;
-	lead = 0;
+	lead = null;
 	hearts_broken = false;
 	user_interface = ui;
     }
@@ -52,7 +53,8 @@ public class Game
 
     void update_game (double time_elapsed)
     {
-	//System.out.println(state);
+	players[0].handle_input();
+    
 	boolean update_occured = false;
 	for (int i = 0 ; i < 52 ; ++i)
 	{   
@@ -93,6 +95,9 @@ public class Game
 		}
 		else
 		{
+		    hearts_broken = false;
+		    lead = null;
+		    
 		    state = Globals.STATE_SORT;
 		    timer = 0;
 		}
@@ -138,7 +143,7 @@ public class Game
 		    timer = 0;
 		}
 		else if (part == 1 && players[0].shift_chosen() && timer > 60)
-		{
+		{                    
 		    ++part;
 		    timer = 0;
 		}
@@ -181,17 +186,17 @@ public class Game
 		break;
 	    case Globals.STATE_TRICK:
 		++timer;
-		if (players[turn].chosen_trick() && timer > 31)
+		if (players[turn].chosen_trick(lead) && timer > 31)
 		{
 		    trick_cards[turn].set_layer(200+part);
-		    players[turn].get_hand().transfer_card(
-			    trick_cards[turn],
-			    players[turn].next_card_trick(
-				    trick_cards[(turn-part+4)%4].card(0)));
+		    players[turn].play(trick_cards[turn],
+			    players[turn].next_card_trick(lead));
 		    players[turn].get_hand().update_cards();
 		    trick_cards[turn].card(0).set_face(true);
 		    if (trick_cards[turn].card(0).get_suit() == Globals.HEARTS)
-			hearts_broken = true;;
+			hearts_broken = true;
+		    if (part == 0)
+			lead = trick_cards[(turn-part+4)%4].card(0);
 		    turn = (turn+1)%4;
 		    ++part;
 		    timer = 0;
@@ -205,6 +210,9 @@ public class Game
 	    case Globals.STATE_TRICK_END:
 		if (timer == 30)
 		{
+		    lead = null;
+		    for (int i = 0; i < 52; ++i)
+			all_cards.card(i).deselect();
 		    int highest = turn;
 		    for (int i = 0; i < 4; ++i)
 		    {
@@ -278,8 +286,7 @@ public class Game
 			if (timer % 2 == 0 && players[i].get_hand().num_cards()>0)
 			{
 			    players[i].get_hand().card(0).set_face(false);
-			    players[i].get_hand().transfer_card(
-				    pool,
+			    players[i].play(pool,
 				    players[i].get_hand().card(0));
 			}
 		    }
@@ -325,5 +332,13 @@ public class Game
     public int cur_trick()
     {
 	return 13-tricks_left;
+    }
+    public int get_state()
+    {
+	return state;
+    }
+    public boolean player_zero_turn()
+    {
+	return state == Globals.STATE_TRICK && turn == 0 && timer > 31;
     }
 }

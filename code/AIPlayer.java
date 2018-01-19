@@ -35,7 +35,7 @@ public class AIPlayer extends Player
 	}
     }
 
-    public boolean chosen_trick()
+    public boolean chosen_trick(Card lead)
     {
 	return true;
     }
@@ -47,7 +47,7 @@ public class AIPlayer extends Player
 	    {
 		return hand.card(0);
 	    }
-	    if (game.broken_hearts())
+	    if (game.broken_hearts() || hand.num_cards() == hand.num_suit(Globals.HEARTS))
 	    {
 		return hand.card(Globals.rand.nextInt(hand.num_cards()));
 	    }

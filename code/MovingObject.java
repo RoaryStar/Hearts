@@ -48,7 +48,7 @@ public abstract class MovingObject extends GameObject
 			}
 			else
 			{
-				double from = (1.0 + Math.cos ((Math.PI * progress)/1.2+0.1)) / 2.0;
+				double from = (1.0 + Math.cos ((Math.PI * progress))) / 2.0;
 				double to = 1.0 - from;
 				location.x = (int) (prev_loc.x * from + new_loc.x * to);
 				location.y = (int) (prev_loc.y * from + new_loc.y * to);
