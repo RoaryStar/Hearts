@@ -28,6 +28,7 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		{
 			Globals.CARD_UP_IMG = ImageIO.read(new File("cards_up.gif"));
 			Globals.CARD_DOWN_IMG = ImageIO.read(new File("cards_down.gif"));
+			Globals.HEARTS_BROKEN_IMG = ImageIO.read(new File("hearts_broken.gif"));
 			
 			Globals.CARD_DIM = new Point(
 					Globals.CARD_UP_IMG.getWidth(this) / 13,
@@ -43,6 +44,12 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 		
 		addMouseListener (this);
 		addMouseMotionListener (this);
+		
+		Globals.hb_img = new Sprite(Globals.HEARTS_BROKEN_IMG,
+				    new Point (0, 0), 1000,
+				    new Point (300, 211),
+				    new Point (Globals.HEARTS_BROKEN_IMG.getWidth(this),
+					       Globals.HEARTS_BROKEN_IMG.getHeight(this)));
 		
 		ui = new UI();
 		game = new Game(true, ui);
