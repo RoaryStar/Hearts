@@ -8,6 +8,8 @@ public class Globals
 
 	static Image CARD_UP_IMG;
 	static Image CARD_DOWN_IMG;
+	static Image HEARTS_BROKEN_IMG;
+	static Sprite hb_img;
 
 	final static int CLUBS = 0;
 	final static int DIAMONDS = 1;

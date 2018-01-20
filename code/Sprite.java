@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public abstract class Sprite extends MovingObject
+public class Sprite extends MovingObject
 {
 	private Image image;
 	private Point img_source;

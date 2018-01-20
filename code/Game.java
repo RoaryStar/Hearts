@@ -193,8 +193,10 @@ public class Game
 			    players[turn].next_card_trick(lead));
 		    players[turn].get_hand().update_cards();
 		    trick_cards[turn].card(0).set_face(true);
-		    if (trick_cards[turn].card(0).get_suit() == Globals.HEARTS)
+		    if (!hearts_broken && trick_cards[turn].card(0).get_suit() == Globals.HEARTS)
+		    {
 			hearts_broken = true;
+		    }
 		    if (part == 0)
 			lead = trick_cards[(turn-part+4)%4].card(0);
 		    turn = (turn+1)%4;
@@ -245,6 +247,7 @@ public class Game
 	    case Globals.STATE_HAND_END:
 		if (part == 0)
 		{
+		    hearts_broken = false;
 		    for (int i = 0; i < 4; ++i)
 		    {
 			players[i].get_takens().sort_standard();
@@ -319,6 +322,9 @@ public class Game
 
     void draw_game (Graphics g)
     {
+	if (hearts_broken)
+	    Globals.hb_img.draw(g);
+    
 	all_cards.sort_layer ();
 	for (int i = 0 ; i < 52 ; ++i)
 	{
