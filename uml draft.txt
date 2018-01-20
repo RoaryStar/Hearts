@@ -40,6 +40,7 @@ Sprite : MovingObject
 + set_image(i : Image)
 + set_source_coord(s : Point)
 + moving() : boolean
++ complete_movement()
 
 
 Card : Sprite
@@ -109,6 +110,10 @@ Player
 + get_takens() : Deck
 + play(c : Card, to : Deck)
 + handle_input()
++ set_points_this_hand(p : int)
++ get_points_this_hand() : int
++ end_hand()
++ get_points() : int
 
 
 UserPlayer : Player

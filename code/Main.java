@@ -11,14 +11,13 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 	
 	Graphics buffer_g;
 	Image offscreen;
+	Font font_g;
 	
 	long te = System.currentTimeMillis();
 	
 	final int frames_per_second = 60;
 	final int ms_per_frame = 1000/frames_per_second;
 		
-	Deck d;
-	Deck e;
 	public void init ()
 	{
 		offscreen = createImage(getSize().width, getSize().height);
@@ -52,11 +51,10 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 					       Globals.HEARTS_BROKEN_IMG.getHeight(this)));
 		
 		ui = new UI();
-		game = new Game(true, ui);
+		game = new Game(false, ui);
 		
-		d = new Deck(new Point(0,0));
-		d.initialize_as_standard();
-		e = new Deck(new Point(700,500));
+		font_g = new Font("Verdana", Font.PLAIN, 20);
+		buffer_g.setFont(font_g);
 		
 		repaint();
 	}

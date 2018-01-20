@@ -98,4 +98,23 @@ public abstract class Player
     public void handle_input()
     {
     }
+    
+    public void set_points_this_hand(int p)
+    {
+	points_this_hand = p;
+    }
+    public int get_points_this_hand()
+    {
+	return points_this_hand;
+    }
+    
+    public void end_hand()
+    {
+	points_this_game += points_this_hand;
+	points_this_hand = 0;
+    }
+    public int get_points()
+    {
+	return points_this_game;
+    }
 }

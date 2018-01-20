@@ -60,4 +60,9 @@ public abstract class MovingObject extends GameObject
 	{
 		return progress < 1.0;
 	}
+	
+	public void complete_movement()
+	{
+		progress = 0.99999;
+	}
 }

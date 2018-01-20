@@ -21,8 +21,8 @@ public class Game
     {
 	state = Globals.STATE_BEGIN;
 
-	pool = new Deck (new Point (400 - Globals.CARD_DIM_H.x, 
-				    300 - Globals.CARD_DIM_H.y));
+	pool = new Deck (new Point (400 - Globals.CARD_DIM_H.x,
+		    300 - Globals.CARD_DIM_H.y));
 	all_cards = new Deck ();
 	all_cards.initialize_as_standard ();
 
@@ -42,7 +42,7 @@ public class Game
 	    players [i].get_hand ().set_layer (100);
 	    players [i].get_hand ().set_shown (false);
 	}
-	
+
 	hand_num = 1;
 	turn_num = 0;
 	lead = null;
@@ -53,14 +53,14 @@ public class Game
 
     void update_game (double time_elapsed)
     {
-	players[0].handle_input();
-    
+	players [0].handle_input ();
+
 	boolean update_occured = false;
 	for (int i = 0 ; i < 52 ; ++i)
-	{   
-	    if (all_cards.card(i).moving())
+	{
+	    if (all_cards.card (i).moving ())
 	    {
-		update_occured = true;        
+		update_occured = true;
 		all_cards.card (i).update (time_elapsed);
 	    }
 	}
@@ -70,7 +70,7 @@ public class Game
 		for (int i = 0 ; i < 52 ; ++i)
 		{
 		    pool.add_card (all_cards.card (i));
-		    pool.card(i).set_face(false);
+		    pool.card (i).set_face (false);
 		}
 		state = Globals.STATE_SHUFFLE;
 		timer = 0;
@@ -82,26 +82,29 @@ public class Game
 		{
 		    pool.shuffle ();
 		    tricks_left = 13;
-		    
+
 		    state = Globals.STATE_DEAL;
+		    part = 0;
 		    timer = 0;
 		}
 		break;
-	    case Globals.STATE_DEAL:
-		if (pool.num_cards () > 0)
+	    case Globals.STATE_DEAL:   
+		do
 		{
-		    pool.transfer_card (players [timer % 4].get_hand (), pool.card (pool.num_cards () - 1));
-		    timer += 1;
-		}
-		else
-		{
-		    hearts_broken = false;
-		    lead = null;
-		    
-		    state = Globals.STATE_SORT;
-		    timer = 0;
-		}
-
+		    if (pool.num_cards () > 0)
+		    {
+			pool.transfer_card (players [part % 4].get_hand (), pool.card (pool.num_cards () - 1));
+			part += 1;
+		    }
+		    else
+		    {
+			hearts_broken = false;
+			lead = null;
+    
+			state = Globals.STATE_SORT;
+			timer = 0;
+		    }
+		} while (timer >= 600);
 		break;
 	    case Globals.STATE_SORT:
 		if (!update_occured)
@@ -135,24 +138,24 @@ public class Game
 		}
 		else if (part == 0)
 		{
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			players[i].shift_choose((i+hand_num)%4);
+			players [i].shift_choose ((i + hand_num) % 4);
 		    }
 		    ++part;
 		    timer = 0;
 		}
-		else if (part == 1 && players[0].shift_chosen() && timer > 60)
-		{                    
+		else if (part == 1 && players [0].shift_chosen () && timer > 60)
+		{
 		    ++part;
 		    timer = 0;
 		}
 		else if (part == 2)
 		{
-		    for (int i = 0; i < 4; ++i)
-			players[i].shift_cards_setup();
-		    for (int i = 0; i < 4; ++i)
-			players[i].shift_cards_shift((i+hand_num)%4);
+		    for (int i = 0 ; i < 4 ; ++i)
+			players [i].shift_cards_setup ();
+		    for (int i = 0 ; i < 4 ; ++i)
+			players [i].shift_cards_shift ((i + hand_num) % 4);
 		    ++part;
 		    timer = 0;
 		}
@@ -163,10 +166,10 @@ public class Game
 		}
 		else if (part == 4)
 		{
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			players[i].get_hand().sort_standard();
-			players[i].get_hand().update_cards();
+			players [i].get_hand ().sort_standard ();
+			players [i].get_hand ().update_cards ();
 		    }
 		    ++part;
 		    timer = 0;
@@ -174,11 +177,11 @@ public class Game
 		else if (part == 5 && timer > 60)
 		{
 		    //2 of clubs starts
-		    for (turn = 0; ; ++turn)
-			if (players[turn].get_hand().card(0).get_value() == 1 &&
-			    players[turn].get_hand().card(0).get_suit() == 0)
+		    for (turn = 0 ;; ++turn)
+			if (players [turn].get_hand ().card (0).get_value () == 1 &&
+				players [turn].get_hand ().card (0).get_suit () == 0)
 			    break;
-		
+
 		    state = Globals.STATE_TRICK;
 		    part = 0;
 		    timer = 0;
@@ -186,26 +189,26 @@ public class Game
 		break;
 	    case Globals.STATE_TRICK:
 		++timer;
-		if (players[turn].chosen_trick(lead) && timer > 31)
+		if (part >= 4 && timer >= 30)
 		{
-		    trick_cards[turn].set_layer(200+part);
-		    players[turn].play(trick_cards[turn],
-			    players[turn].next_card_trick(lead));
-		    players[turn].get_hand().update_cards();
-		    trick_cards[turn].card(0).set_face(true);
-		    if (!hearts_broken && trick_cards[turn].card(0).get_suit() == Globals.HEARTS)
+		    state = Globals.STATE_TRICK_END;
+		    timer = 0;
+		}
+		if (players [turn].chosen_trick (lead) && timer > 31)
+		{
+		    trick_cards [turn].set_layer (200 + part);
+		    players [turn].play (trick_cards [turn],
+			    players [turn].next_card_trick (lead));
+		    players [turn].get_hand ().update_cards ();
+		    trick_cards [turn].card (0).set_face (true);
+		    if (!hearts_broken && trick_cards [turn].card (0).get_suit () == Globals.HEARTS)
 		    {
 			hearts_broken = true;
 		    }
 		    if (part == 0)
-			lead = trick_cards[(turn-part+4)%4].card(0);
-		    turn = (turn+1)%4;
+			lead = trick_cards [(turn - part + 4) % 4].card (0);
+		    turn = (turn + 1) % 4;
 		    ++part;
-		    timer = 0;
-		}
-		if (part >= 4 && timer >= 30)
-		{
-		    state = Globals.STATE_TRICK_END;
 		    timer = 0;
 		}
 		break;
@@ -213,22 +216,22 @@ public class Game
 		if (timer == 30)
 		{
 		    lead = null;
-		    for (int i = 0; i < 52; ++i)
-			all_cards.card(i).deselect();
+		    for (int i = 0 ; i < 52 ; ++i)
+			all_cards.card (i).deselect ();
 		    int highest = turn;
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			if (trick_cards[i].card(0).get_suit() ==
-			    trick_cards[turn].card(0).get_suit() &&
-			    ((trick_cards[i].card(0).get_value()+12)%13) >
-			    ((trick_cards[highest].card(0).get_value()+12)%13))
+			if (trick_cards [i].card (0).get_suit () ==
+				trick_cards [turn].card (0).get_suit () &&
+				((trick_cards [i].card (0).get_value () + 12) % 13) >
+				((trick_cards [highest].card (0).get_value () + 12) % 13))
 			    highest = i;
 		    }
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			trick_cards[i].transfer_card(
-				players[highest].get_takens(),
-				trick_cards[i].card(0));
+			trick_cards [i].transfer_card (
+				players [highest].get_takens (),
+				trick_cards [i].card (0));
 		    }
 		    turn = highest;
 		}
@@ -248,30 +251,44 @@ public class Game
 		if (part == 0)
 		{
 		    hearts_broken = false;
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			players[i].get_takens().sort_standard();
+			players [i].get_takens ().sort_standard ();
+			for (int j = 0; j < players[i].get_takens().num_cards(); ++j)
+			{
+			    players[i].set_points_this_hand(
+				    players[i].get_takens().card(j).point_value() +
+				    players[i].get_points_this_hand());
+			}
+			if (players[i].get_points_this_hand() == 26)
+			{
+			    players[0].set_points_this_hand(26);
+			    players[1].set_points_this_hand(26);
+			    players[2].set_points_this_hand(26);
+			    players[3].set_points_this_hand(26);
+			    players[i].set_points_this_hand(0);
+			}
 		    }
 		    ++part;
 		}
 		if (part == 1)
 		{
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			if (players[i].get_takens().num_cards() > 0)
+			if (players [i].get_takens ().num_cards () > 0)
 			{
-			    if (players[i].get_takens().card(0).point_value()>0)
+			    if (players [i].get_takens ().card (0).point_value () > 0)
 			    {
-				players[i].get_takens().transfer_card(
-					players[i].get_hand(),
-					players[i].get_takens().card(0));
+				players [i].get_takens ().transfer_card (
+					players [i].get_hand (),
+					players [i].get_takens ().card (0));
 			    }
 			    else
 			    {
-				players[i].get_takens().card(0).set_face(false);
-				players[i].get_takens().transfer_card(
+				players [i].get_takens ().card (0).set_face (false);
+				players [i].get_takens ().transfer_card (
 					pool,
-					players[i].get_takens().card(0));
+					players [i].get_takens ().card (0));
 			    }
 			}
 		    }
@@ -283,27 +300,27 @@ public class Game
 		}
 		else if (part == 2 && timer == 0)
 		{
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			players[i].get_hand().set_shown(true);
+			players [i].get_hand ().set_shown (true);
 		    }
 		}
 		else if (part == 2 && timer > 300)
 		{
-		    for (int i = 0; i < 4; ++i)
+		    for (int i = 0 ; i < 4 ; ++i)
 		    {
-			if (timer % 2 == 0 && players[i].get_hand().num_cards()>0)
+			if (timer % 2 == 0 && players [i].get_hand ().num_cards () > 0)
 			{
-			    players[i].get_hand().card(0).set_face(false);
-			    players[i].play(pool,
-				    players[i].get_hand().card(0));
+			    players [i].get_hand ().card (0).set_face (false);
+			    players [i].play (pool,
+				    players [i].get_hand ().card (0));
 			}
 		    }
 		    if (timer > 330)
 		    {
-			for (int i = 1; i < 4; ++i)
+			for (int i = 1 ; i < 4 ; ++i)
 			{
-			    players[i].get_hand().set_shown(false);
+			    players [i].get_hand ().set_shown (false);
 			}
 			++part;
 			timer = -1;
@@ -311,6 +328,10 @@ public class Game
 		}
 		else if (part == 3)
 		{
+		    players [0].end_hand ();
+		    players [1].end_hand ();
+		    players [2].end_hand ();
+		    players [3].end_hand ();
 		    ++hand_num;
 		    state = Globals.STATE_SHUFFLE;
 		}
@@ -323,33 +344,53 @@ public class Game
     void draw_game (Graphics g)
     {
 	if (hearts_broken)
-	    Globals.hb_img.draw(g);
-    
+	    Globals.hb_img.draw (g);
+
 	all_cards.sort_layer ();
 	for (int i = 0 ; i < 52 ; ++i)
 	{
 	    all_cards.card (i).draw (g);
 	}
+	
+	g.setColor(Color.black);
+	for (int i = 0; i < 4; ++i)
+	{
+	    g.drawString(""+players[i].get_points(), Globals.LOC_TEXTS[i].x, Globals.LOC_TEXTS[i].y);
+	}
+	if (state == Globals.STATE_HAND_END)
+	{
+	    for (int i = 0; i < 4; ++i)
+		g.drawString("+ " + players[i].get_points_this_hand(),
+			Globals.OFF_TEXTS[i].x, Globals.OFF_TEXTS[i].y);
+	}
     }
-    
-    public Player get_player(int id)
+
+
+    public Player get_player (int id)
     {
-	return players[id];
+	return players [id];
     }
-    
-    public boolean broken_hearts()
+
+
+    public boolean broken_hearts ()
     {
 	return hearts_broken;
     }
-    public int cur_trick()
+
+
+    public int cur_trick ()
     {
-	return 13-tricks_left;
+	return 13 - tricks_left;
     }
-    public int get_state()
+
+
+    public int get_state ()
     {
 	return state;
     }
-    public boolean player_zero_turn()
+
+
+    public boolean player_zero_turn ()
     {
 	return state == Globals.STATE_TRICK && turn == 0 && timer > 31;
     }

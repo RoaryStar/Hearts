@@ -21,10 +21,10 @@ public class Globals
 	final static int SOUTH = 2;
 	final static int WEST = 3;
 
-	final static Point LOC_PLAYER_NORTH = new Point (530, 0);
-	final static Point LOC_PLAYER_EAST = new Point (728, 380);
-	final static Point LOC_PLAYER_SOUTH = new Point (170, 500);
-	final static Point LOC_PLAYER_WEST = new Point (0, 120);
+	final static Point LOC_PLAYER_NORTH = new Point (544, 0);
+	final static Point LOC_PLAYER_EAST = new Point (728, 370);
+	final static Point LOC_PLAYER_SOUTH = new Point (184, 500);
+	final static Point LOC_PLAYER_WEST = new Point (0, 130);
 	final static Point LOC_PLAYERS[] =
 		{LOC_PLAYER_SOUTH, LOC_PLAYER_WEST,
 		LOC_PLAYER_NORTH, LOC_PLAYER_EAST};
@@ -60,6 +60,22 @@ public class Globals
 	final static Point LOC_TRICKS[] =
 		{LOC_TRICK_SOUTH, LOC_TRICK_WEST,
 		LOC_TRICK_NORTH, LOC_TRICK_EAST};
+		
+	final static Point LOC_TEXT_NORTH = new Point (554, 140);
+	final static Point LOC_TEXT_EAST = new Point (738, 505);
+	final static Point LOC_TEXT_SOUTH = new Point (194, 480);
+	final static Point LOC_TEXT_WEST = new Point (10, 110);
+	final static Point LOC_TEXTS[] =
+		{LOC_TEXT_SOUTH, LOC_TEXT_WEST,
+		LOC_TEXT_NORTH, LOC_TEXT_EAST};
+		
+	final static Point OFF_TEXT_NORTH = new Point (604, 140);
+	final static Point OFF_TEXT_EAST = new Point (738, 525);
+	final static Point OFF_TEXT_SOUTH = new Point (244, 480);
+	final static Point OFF_TEXT_WEST = new Point (60, 110);
+	final static Point OFF_TEXTS[] =
+		{OFF_TEXT_SOUTH, OFF_TEXT_WEST,
+		OFF_TEXT_NORTH, OFF_TEXT_EAST};
 
 	static Vector ERROR_LOG = new Vector ();
 
