@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 
 public class Game
 {
@@ -30,9 +31,15 @@ public class Game
 	trick_cards = new Deck [4];
 
 	if (human_player)
+	{
 	    players [0] = new UserPlayer (0, this, ui);
+	    Globals.NAMES[0] = "You";
+	}
 	else
+	{    
 	    players [0] = new AIPlayer (0, this);
+	    Globals.NAMES[0] = "South";
+	}
 	trick_cards [0] = new Deck (Globals.LOC_TRICKS [0]);
 	players [0].get_hand ().set_shown (true);
 	for (int i = 1 ; i < 4 ; ++i)
@@ -332,10 +339,35 @@ public class Game
 		    players [1].end_hand ();
 		    players [2].end_hand ();
 		    players [3].end_hand ();
+		    
+		    for (int i = 0 ; i < 4 ; ++i)
+		    {
+			if (players[i].get_points() >= 100)
+			{
+			    state = Globals.STATE_GAME_END;
+			    timer = 0;
+			    part = 0;
+			    return;
+			}
+		    }
 		    ++hand_num;
 		    state = Globals.STATE_SHUFFLE;
 		}
 		++timer;
+		break;
+	    case Globals.STATE_GAME_END:
+		int last;
+		if ((last = pool.num_cards()) > 0)
+		{
+		    double dir = (part += Globals.rand.nextInt(5)+3)*Math.PI*2.0/50.0;
+		    pool.card(--last).flip();
+		    pool.card(last).move_to_location(new Point(
+			    (int)(Math.cos(dir)*6000) + 364,
+			    (int)(Math.sin(dir)*6000) + 250), 2.0);
+		    pool.remove_card(pool.card(last));
+		}
+		else if (user_interface.get_click() != null)
+		    new_game();
 		break;
 	}
     }
@@ -353,15 +385,41 @@ public class Game
 	}
 	
 	g.setColor(Color.black);
-	for (int i = 0; i < 4; ++i)
-	{
-	    g.drawString(""+players[i].get_points(), Globals.LOC_TEXTS[i].x, Globals.LOC_TEXTS[i].y);
-	}
-	if (state == Globals.STATE_HAND_END)
+	if (state != Globals.STATE_GAME_END)
 	{
 	    for (int i = 0; i < 4; ++i)
-		g.drawString("+ " + players[i].get_points_this_hand(),
-			Globals.OFF_TEXTS[i].x, Globals.OFF_TEXTS[i].y);
+	    {
+		g.drawString(""+players[i].get_points(), Globals.LOC_TEXTS[i].x, Globals.LOC_TEXTS[i].y);
+	    }
+	    if (state == Globals.STATE_HAND_END)
+	    {
+		for (int i = 0; i < 4; ++i)
+		    g.drawString("+ " + players[i].get_points_this_hand(),
+			    Globals.OFF_TEXTS[i].x, Globals.OFF_TEXTS[i].y);
+	    }
+	}
+	else
+	{
+	    int order[] = {0, 1, 2, 3};
+	    for (int z = 0; z < 4; ++z)
+	    {
+		for (int i = 0; i < 3; ++i)
+		{
+		    if (players[order[i]].get_points() > players[order[i+1]].get_points())
+		    {
+			int c = order[i];
+			order[i] = order[i+1];
+			order[i+1] = c;
+		    }
+		}
+	    }
+	    g.drawString("Game Over!", 300, 230);
+	    for (int i = 0; i < 4; ++i)
+	    {
+		g.drawString("" + (i+1) + ". " + Globals.NAMES[order[i]], 300, 280+20*i);
+		g.drawString("" + players[order[i]].get_points(), 450, 280+20*i); 
+	    }
+	    g.drawString("Click to play again.", 300, 400);
 	}
     }
 
@@ -393,5 +451,32 @@ public class Game
     public boolean player_zero_turn ()
     {
 	return state == Globals.STATE_TRICK && turn == 0 && timer > 31;
+    }
+    
+    public void new_game()
+    {
+	state = Globals.STATE_BEGIN;
+	
+	for (int i = 0; i < 4; ++i)
+	{
+	    while (players[i].get_hand().num_cards() > 0)
+		players[i].get_hand().remove_card(players[i].get_hand().card(0));
+	    while (players[i].get_takens().num_cards() > 0)
+		players[i].get_takens().remove_card(players[i].get_takens().card(0));
+	    while (trick_cards[i].num_cards() > 0)
+		trick_cards[i].remove_card(trick_cards[i].card(0));
+	    
+	    players[i].set_points_this_hand(-players[i].get_points());
+	    players[i].end_hand();
+	}
+	for (int i = 0; i < 52; ++i)
+	{
+	    all_cards.card(i).complete_movement();
+	}
+
+	hand_num = 1;
+	turn_num = 0;
+	lead = null;
+	hearts_broken = false;
     }
 }

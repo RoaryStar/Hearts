@@ -76,6 +76,8 @@ public class Globals
 	final static Point OFF_TEXTS[] =
 		{OFF_TEXT_SOUTH, OFF_TEXT_WEST,
 		OFF_TEXT_NORTH, OFF_TEXT_EAST};
+	
+	static String[] NAMES = {"South", "West", "North", "East"};
 
 	static Vector ERROR_LOG = new Vector ();
 
@@ -89,4 +91,5 @@ public class Globals
 	final static int STATE_TRICK = 5;
 	final static int STATE_TRICK_END = 6;
 	final static int STATE_HAND_END = 7;
+	final static int STATE_GAME_END = 8;
 }

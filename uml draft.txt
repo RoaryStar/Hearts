@@ -167,3 +167,4 @@ Game
 + broken_hearts() : boolean
 + cur_trick() : int
 + get_state() : int
++ new_game()
