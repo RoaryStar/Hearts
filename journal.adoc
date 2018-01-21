@@ -99,4 +99,10 @@ a|Now there's a picture for broken hearts
 a|Points now tracked, shown
 |
 |
+
+|Sat 2018-01-20
+|2 Hours
+a|Game-over works correctly
+|
+|
 |===
