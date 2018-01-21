@@ -155,7 +155,6 @@ Game
 # pool : Deck
 # lead : Card
 # turn : int
-# turn_num : int
 # hand_num : int
 # tricks_left : int
 # hearts_broken : boolean
