@@ -45,7 +45,8 @@ public class UserPlayer extends Player
 	    {
 		if (lead == null)
 		{
-		    if (hand.num_cards() == 13 && i == 0)
+		    if (hand.num_cards() == 13)
+			if (i == 0)
 			return true;
 		    else
 		    {
