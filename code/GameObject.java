@@ -4,6 +4,9 @@ public abstract class GameObject
 {
 	protected Point location;
 	protected Point dimensions;
+	
+	//things drawn (or things which have things to be drawn)
+	//need to know what should be above/below it
 	protected int layer;
 
 	public GameObject ()
@@ -24,6 +27,7 @@ public abstract class GameObject
 
 	public void set_loc (Point l)
 	{
+		//everything is a pointer, so memory leaks fix things
 		location = new Point(l.x, l.y);
 	}
 
@@ -42,6 +46,7 @@ public abstract class GameObject
 
 	public Point get_loc ()
 	{
+		//everything is a pointer, so memory leaks fix things
 		return new Point(location.x, location.y);
 	}
 
@@ -103,5 +108,12 @@ public abstract class GameObject
 	public int get_layer ()
 	{
 		return layer;
+	}
+	
+	public boolean is_inside(Point p)
+	{
+		return (p.x > location.x && p.y > location.y &&
+			p.x < location.x + dimensions.x &&
+			p.y < location.y + dimensions.y);
 	}
 }

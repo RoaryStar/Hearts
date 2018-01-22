@@ -2,12 +2,19 @@ import java.awt.*;
 
 public abstract class Player
 {
+    //keep track of which player this is and the game they're in
     protected int player_id;
+    protected Game game;
+    
+    //a player has a hand and takes tricks
     protected Pile hand;
     protected Deck taken_tricks;
+    
+    //keep track of points
     protected int points_this_hand;
     protected int points_this_game;
-    protected Game game;
+    
+    //a temporary array to keep track of what a player will flush
     private Card shift_temp [] = {null, null, null};
 
     public Player ()
@@ -26,6 +33,7 @@ public abstract class Player
 	player_id = id;
 	hand = new Pile (Globals.LOC_PLAYERS [id], Globals.OFF_PLAYERS [id], Globals.SEL_PLAYERS [id], false);
 	taken_tricks = new Deck (Globals.LOC_TAKENS [id]);
+	taken_tricks.set_layer(0);
 	points_this_hand = 0;
 	points_this_game = 0;
 	game = g;
@@ -73,18 +81,50 @@ public abstract class Player
 	    shift_temp [i] = null;
 	}
     }
+    
+    public void signal(int sig)
+    {
+    }
 
-
-    public abstract Card next_card_trick ();
+    public abstract Card next_card_trick (Card lead);
+    public abstract boolean chosen_trick (Card lead);
 
     public Pile get_hand ()
     {
 	return hand;
     }
+    public Deck get_takens()
+    {
+	return taken_tricks;
+    }
 
 
-    public void play (Card c, Deck to)
+    public void play (Deck to, Card c)
     {
 	hand.transfer_card (to, c);
+    }
+    
+    
+    public void handle_input()
+    {
+    }
+    
+    public void set_points_this_hand(int p)
+    {
+	points_this_hand = p;
+    }
+    public int get_points_this_hand()
+    {
+	return points_this_hand;
+    }
+    
+    public void end_hand()
+    {
+	points_this_game += points_this_hand;
+	points_this_hand = 0;
+    }
+    public int get_points()
+    {
+	return points_this_game;
     }
 }

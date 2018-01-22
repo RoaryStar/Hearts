@@ -75,4 +75,34 @@ a|Made things look better, set up infrastructure for interactions
 a|Flushes work now
 |
 |Try and do tricks
+
+|Thurs 2018-01-18
+|1/2 Hour
+a|The game works!
+|
+|
+
+|Thurs 2018-01-18
+|1 1/2 Hours
+a|You can play now!
+|DO NOT get distracted
+|Get the point system working
+
+|Fri 2018-01-19
+|1/2 Hours
+a|Now there's a picture for broken hearts
+|
+|
+
+|Sat 2018-01-20
+|1 Hour
+a|Points now tracked, shown
+|
+|
+
+|Sat 2018-01-20
+|2 Hours
+a|Game-over works correctly
+|
+|
 |===

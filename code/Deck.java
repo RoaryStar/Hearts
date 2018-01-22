@@ -16,7 +16,7 @@ public class Deck extends GameObject
 		cards = new Vector();
 	}
 
-
+	//creates a standard 52-card deck
 	public void initialize_as_standard ()
 	{
 		cards.removeAllElements ();
@@ -29,20 +29,30 @@ public class Deck extends GameObject
 			}
 		}
 	}
+	
+	//shuffles the cards
 	public void shuffle ()
 	{
 		Collections.shuffle (cards, Globals.rand);
+		
+		//keep everything in the right layer
 		for (int i = 0; i < cards.size(); ++i)
 		{
 			((Card)cards.elementAt(i)).set_layer(layer + i);
 		}
 	}
+	
+	
 	public void add_card (Card c)
 	{
+		//don't add the same card twice
 		if (!cards.contains (c))
 		{
 			cards.add (c);
+			
+			//let there be something to show large numbers of cards in a deck
 			c.set_loc (new Point (location.x + num_cards () / 10 * 2, location.y));
+			
 			c.set_layer(layer + num_cards());
 		}
 		else
@@ -59,10 +69,11 @@ public class Deck extends GameObject
 	}
 	public void transfer_card (Deck d, Card c)
 	{
+		Point old_loc = c.get_loc();
 		d.add_card (c);
 		remove_card (c);
 		Point new_loc = c.get_loc();
-		c.set_loc (location);
+		c.set_loc (old_loc);
 		c.move_to_location (new_loc, 0.5);
 	}
 	public void transfer_card (Pile p, Card c)
@@ -81,6 +92,9 @@ public class Deck extends GameObject
 	}
 	public Card card (int index)
 	{
+		//normally would return an exception
+		if (index >= num_cards())
+		    return null;
 		return (Card) cards.elementAt (index);
 	}
 	public int index (Card c)
@@ -88,6 +102,7 @@ public class Deck extends GameObject
 		return cards.indexOf (c);
 	}
 	
+	//sorts cards by layer (for drawing)
 	public void sort_layer()
 	{
 		Collections.sort(cards, new Comparator() {
@@ -97,6 +112,8 @@ public class Deck extends GameObject
 				}
 			});
 	}
+	
+	//sorts cards Clubs->Diamonds->Spades->Hearts, 2->A
 	public void sort_standard()
 	{
 		Collections.sort(cards, new Comparator() {
@@ -107,5 +124,16 @@ public class Deck extends GameObject
 							((((Card)o1).get_value() == ((Card)o2).get_value())? 0 : 1) : 1);
 				}
 			});
+	}
+	
+	//counts the number of cards in a certain suit
+	public int num_suit(int suit)
+	{
+	    int ret = 0;
+	    for (int i = 0; i < num_cards(); ++i)
+	    {
+		if (card(i).get_suit() == suit) ++ret;
+	    }
+	    return ret;
 	}
 }

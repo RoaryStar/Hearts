@@ -4,7 +4,7 @@ import java.util.*;
 public class Pile extends Deck
 {
 	protected Point offset;
-	protected Point selset;
+	protected Point selset;     //[sel]ection off[set]
 	protected boolean shown;
 
 	public Pile ()
@@ -47,7 +47,8 @@ public class Pile extends Deck
 			Globals.ERROR_LOG.add ("Attempted to remove nonexistent card from deck!");
 	}
 
-
+	//since order in a pile really matters, this fixes everything
+	//that might be changed
 	public void update_cards ()
 	{
 		for (int i = 0 ; i < num_cards () ; ++i)
@@ -63,6 +64,7 @@ public class Pile extends Deck
 		}
 	}
 	
+	//gives the next location for a new card
 	public Point next_pos()
 	{
 		return new Point(location.x + offset.x * cards.size(),

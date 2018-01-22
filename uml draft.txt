@@ -18,6 +18,7 @@ GameObject
 + get_height() : int
 + set_layer(l : int)
 + get_layer() : int
++ is_inside(p : Point) : boolean
 
 
 MovingObject : GameObject
@@ -39,6 +40,7 @@ Sprite : MovingObject
 + set_image(i : Image)
 + set_source_coord(s : Point)
 + moving() : boolean
++ complete_movement()
 
 
 Card : Sprite
@@ -57,6 +59,7 @@ Card : Sprite
 + select()
 + deselect()
 + is_selected() : boolean
++ get_id() : int
 
 
 Deck : GameObject
@@ -103,20 +106,45 @@ Player
 + shift_cards_setup()
 + shift_cards_shift(to : int)
 + next_card_trick() : Card
++ chosen_trick() : boolean
 + get_hand() : Pile
++ get_takens() : Deck
++ play(c : Card, to : Deck)
++ handle_input()
++ set_points_this_hand(p : int)
++ get_points_this_hand() : int
++ end_hand()
++ get_points() : int
++ signal(sig : int)
 
 
 UserPlayer : Player
 ==========
 ----------
-<todo: all user interface things>
 
 
 Ego
 ==========
-# card_counting : double[52][4]
+# inputs : double[312]
+# hiddens : double[104]
+# utility : double[52]
+# in_hand : boolean[52]
+# played : boolean[208]
+# taken : boolean[52]
+# order : int[52]
+# player : Player
+# game : Game
 ----------
-<todo: figure out interfaces here>
+- sigmoid(d: double) : double
+- update_knowns()
+- update_inputs()
+- calc_utility()
++ new_hand()
++ card_played(player : int, card : int)
++ choose_play()
++ choose_flush()
++ get_order() : int[]
+
 
 
 AIPlayer : Player
@@ -130,20 +158,32 @@ AIPlayer : Player
 
 UI
 ==========
+click : Point
+ticks_since_last_click : int
 ----------
+activate_click(l : Point)
+get_click() : Point
+update()
 
 
 Game
 ==========
-# players : Player[4]
-# hand : int
+# players : Player[4]]
 # trick_cards : Deck[4]
 # all_cards : Deck
 # pool : Deck
+# lead : Card
 # turn : int
+# hand_num : int
+# tricks_left : int
 # hearts_broken : boolean
 # user_interface : UI
 ----------
 + update_game(time_elapsed : double)
 + draw_game(g : Graphics)
 + get_player(id : int) : Player
++ broken_hearts() : boolean
++ cur_trick() : int
++ get_state() : int
++ new_game()
++ get_all_cards() : Deck

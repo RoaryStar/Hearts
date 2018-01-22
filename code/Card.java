@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class Card extends Sprite
 {
+	//self-explanatory
 	protected int suit;
 	protected int value;
 	protected boolean face_up;
@@ -32,6 +33,8 @@ public class Card extends Sprite
 	public void set_face (boolean faceup)
 	{
 		face_up = faceup;
+		
+		//also set the image being used to paint this
 		if (face_up)
 		    set_image(Globals.CARD_UP_IMG);
 		else
@@ -59,8 +62,10 @@ public class Card extends Sprite
 
 	public int point_value ()
 	{
+		//hearts are worth one point...
 		if (suit == Globals.HEARTS)
 			return 1;
+		//and the Queen of Spades 13
 		if (suit == Globals.SPADES && value == 11)
 			return 13;
 		return 0;
@@ -78,5 +83,10 @@ public class Card extends Sprite
 	public boolean is_selected()
 	{
 	    return selected;
+	}
+	
+	public int get_id()
+	{
+	    return suit*13 + value;
 	}
 }
