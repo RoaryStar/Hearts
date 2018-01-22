@@ -74,7 +74,10 @@ public abstract class Player
 	    shift_temp [i] = null;
 	}
     }
-
+    
+    public void signal(int sig)
+    {
+    }
 
     public abstract Card next_card_trick (Card lead);
     public abstract boolean chosen_trick (Card lead);

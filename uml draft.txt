@@ -59,6 +59,7 @@ Card : Sprite
 + select()
 + deselect()
 + is_selected() : boolean
++ get_id() : int
 
 
 Deck : GameObject
@@ -114,6 +115,7 @@ Player
 + get_points_this_hand() : int
 + end_hand()
 + get_points() : int
++ signal(sig : int)
 
 
 UserPlayer : Player
@@ -123,9 +125,26 @@ UserPlayer : Player
 
 Ego
 ==========
-# card_counting : double[52][4]
+# inputs : double[312]
+# hiddens : double[104]
+# utility : double[52]
+# in_hand : boolean[52]
+# played : boolean[208]
+# taken : boolean[52]
+# order : int[52]
+# player : Player
+# game : Game
 ----------
-<todo: figure out interfaces here>
+- sigmoid(d: double) : double
+- update_knowns()
+- update_inputs()
+- calc_utility()
++ new_hand()
++ card_played(player : int, card : int)
++ choose_play()
++ choose_flush()
++ get_order() : int[]
+
 
 
 AIPlayer : Player
@@ -167,3 +186,4 @@ Game
 + cur_trick() : int
 + get_state() : int
 + new_game()
++ get_all_cards() : Deck

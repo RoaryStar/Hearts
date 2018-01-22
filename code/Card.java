@@ -79,4 +79,9 @@ public class Card extends Sprite
 	{
 	    return selected;
 	}
+	
+	public int get_id()
+	{
+	    return suit*13 + value;
+	}
 }

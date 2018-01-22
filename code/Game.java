@@ -255,14 +255,16 @@ public class Game
 		    trick_cards [turn].set_layer (200 + part);
 		    
 		    //play a card
-		    players [turn].play (trick_cards [turn],
-			    players [turn].next_card_trick (lead));
+		    Card tc = players [turn].next_card_trick (lead);
+		    players [turn].play (trick_cards [turn], tc);
 			    
 		    //close the gap in the hand
 		    players [turn].get_hand ().update_cards ();
 		    
-		    //let everyone see what you played
+		    //let everyone see what you played, and signal to AI players
 		    trick_cards [turn].card (0).set_face (true);
+		    for (int i = 0; i < 4; ++i)
+			players[i].signal(tc.get_id() + 100 * turn);
 		    
 		    //check if hearts was broken
 		    if (trick_cards [turn].card (0).get_suit () == Globals.HEARTS)
@@ -335,6 +337,10 @@ public class Game
 		//tallys points.
 		if (part == 0)
 		{
+		    //reset the AI's counting
+		    for (int i = 0; i < 4; ++i)
+			players[i].signal(-1);
+		    
 		    //reset this for cosmetic effect
 		    hearts_broken = false;
 		    
@@ -482,6 +488,9 @@ public class Game
 	    all_cards.card (i).draw (g);
 	}
 	
+	//reset so that processing for the AI is easier
+	all_cards.sort_standard();
+	
 	g.setColor(Color.black);
 	if (state != Globals.STATE_GAME_END)
 	{
@@ -582,5 +591,10 @@ public class Game
 	hand_num = 1;
 	lead = null;
 	hearts_broken = false;
+    }
+    
+    public Deck get_all_cards()
+    {
+	return all_cards;
     }
 }

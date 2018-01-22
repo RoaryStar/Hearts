@@ -92,4 +92,10 @@ public class Globals
 	final static int STATE_TRICK_END = 6;
 	final static int STATE_HAND_END = 7;
 	final static int STATE_GAME_END = 8;
+	
+	final static int TS_LEAD = 0;
+	final static int TS_FOLLOW = 1;
+	final static int TS_ANY = 2;
+	
+	static double weights[] = new double[37856];
 }
