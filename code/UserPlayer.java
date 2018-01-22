@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class UserPlayer extends Player
 {
+    //human players need to communicate through an interface
     protected UI user_interface;
 
     public UserPlayer ()
@@ -16,6 +17,7 @@ public class UserPlayer extends Player
 	user_interface = ui;
     }
 
+    //so long as three cards have been chosen, a flush is considered chosen
     public boolean shift_chosen()
     {
 	int num = 0;
@@ -32,7 +34,8 @@ public class UserPlayer extends Player
 	// shift_cards_setup(), and shift_cards_to().
     }
 
-
+    //so long as a valid card has been selected, a card is considered chosen;
+    //invalid cards will be reset.
     public boolean chosen_trick(Card lead)
     {
 	Card c;
@@ -75,11 +78,13 @@ public class UserPlayer extends Player
 	return null;
     }
     
+    //this is how you can actually do things
     public void handle_input()
     {
 	Point l = user_interface.get_click();
 	if (l == null) return;
 	
+	//during a flush, you can both select and deselect
 	if (game.get_state() == Globals.STATE_FLUSH)
 	{
 	    for (int i = hand.num_cards()-1; i >= 0; --i)
@@ -95,6 +100,7 @@ public class UserPlayer extends Player
 		}
 	    }
 	}
+	//during a turn, you can only select
 	else if (game.player_zero_turn())
 	{
 	    for (int i = hand.num_cards()-1; i >= 0; --i)

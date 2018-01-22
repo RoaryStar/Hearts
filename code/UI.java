@@ -1,8 +1,12 @@
 import java.awt.*;
 
+//handles all input for simple retrieval
 public class UI
 {
+    //location of the last click
     protected Point click;
+    
+    //as it says on the tin
     protected int ticks_since_last_click;
     
     public UI ()

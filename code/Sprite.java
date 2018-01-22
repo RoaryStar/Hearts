@@ -3,7 +3,7 @@ import java.awt.*;
 public class Sprite extends MovingObject
 {
 	private Image image;
-	private Point img_source;
+	private Point img_source;   //use a spritesheet instead of fifty-two images >:(
 
 	public Sprite ()
 	{

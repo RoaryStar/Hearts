@@ -7,23 +7,27 @@ import javax.imageio.*;
 
 public class Main extends Applet implements MouseListener, MouseMotionListener
 {
+    //the game and user interface handler
     Game game;
     UI ui;
 
+    //for drawing things
     Graphics buffer_g;
     Image offscreen;
     Font font_g;
-
+    
+    //framerate management
     long te = System.currentTimeMillis ();
-
     final int frames_per_second = 60;
     final int ms_per_frame = 1000 / frames_per_second;
 
     public void init ()
     {
+	//sets up double-buffering
 	offscreen = createImage (getSize ().width, getSize ().height);
 	buffer_g = offscreen.getGraphics ();
 
+	//reads everything to be read from files
 	try
 	{
 	    Globals.CARD_UP_IMG = ImageIO.read (new File ("cards_up.gif"));
@@ -56,45 +60,51 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 	catch (Exception e)
 	{
 	    System.out.println (e.getMessage ());
+	    return;
 	}
 
+	//ensure that input works
 	addMouseListener (this);
 	addMouseMotionListener (this);
 
+	//hearts broken image
 	Globals.hb_img = new Sprite (Globals.HEARTS_BROKEN_IMG,
 		new Point (0, 0), 1000,
 		new Point (300, 211),
 		new Point (Globals.HEARTS_BROKEN_IMG.getWidth (this),
 		    Globals.HEARTS_BROKEN_IMG.getHeight (this)));
 
+	//instantiates the game and ui-handler
 	ui = new UI ();
-	game = new Game (false, ui);
+	game = new Game (true, ui); //true for human, false for AI
 
+	//instantiates the font
 	font_g = new Font ("Verdana", Font.PLAIN, 20);
 	buffer_g.setFont (font_g);
 
+	//starts the game
 	repaint ();
     }
 
 
     public void paint (Graphics g)
     {
-	double elapsed = System.currentTimeMillis () - te;
-	te = System.currentTimeMillis ();
-
+	//setup background
 	buffer_g.clearRect (0, 0, getSize ().width, getSize ().height);
 	buffer_g.setColor (new Color (0, 127, 0));
 	buffer_g.fillRect (0, 0, getSize ().width, getSize ().height);
 
+	//draw the game
 	game.draw_game (buffer_g);
 
-
+	//complete double-buffering
 	g.drawImage (offscreen, 0, 0, this);
     }
 
 
     public void update (Graphics g)
     {
+	//framerate management
 	long l = System.currentTimeMillis () - te;
 	try
 	{
@@ -104,23 +114,30 @@ public class Main extends Applet implements MouseListener, MouseMotionListener
 	catch (InterruptedException e)
 	{
 	}
+	te = System.currentTimeMillis ();
+	
+	//log any errors (deprecated)
 	while (Globals.ERROR_LOG.size () > 0)
 	{
 	    System.out.println (Globals.ERROR_LOG.elementAt (0));
 	    Globals.ERROR_LOG.remove (0);
 	}
 
+	//update things
 	game.update_game (0.016);
 	ui.update ();
 
+	//actually paint
 	paint (g);
 
+	//call for another frame
 	repaint ();
     }
 
 
     public void mouseClicked (MouseEvent e)
     {
+	//everything is handled in the ui-hander.
 	if (e.getButton () == MouseEvent.BUTTON1)
 	    ui.activate_click (e.getPoint ());
     }

@@ -2,12 +2,19 @@ import java.awt.*;
 
 public abstract class Player
 {
+    //keep track of which player this is and the game they're in
     protected int player_id;
+    protected Game game;
+    
+    //a player has a hand and takes tricks
     protected Pile hand;
     protected Deck taken_tricks;
+    
+    //keep track of points
     protected int points_this_hand;
     protected int points_this_game;
-    protected Game game;
+    
+    //a temporary array to keep track of what a player will flush
     private Card shift_temp [] = {null, null, null};
 
     public Player ()
