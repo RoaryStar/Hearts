@@ -105,4 +105,10 @@ a|Points now tracked, shown
 a|Game-over works correctly
 |
 |
+
+|Sun 2018-01-21
+|4 Hours
+a|There's AI now!
+|
+|
 |===

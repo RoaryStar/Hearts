@@ -1,2 +1,5 @@
 *.ini
 *.class
+*.o
+*.exe
+code/best.txt
