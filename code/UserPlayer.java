@@ -46,8 +46,10 @@ public class UserPlayer extends Player
 		if (lead == null)
 		{
 		    if (hand.num_cards() == 13)
+		    {
 			if (i == 0)
-			return true;
+			    return true;
+		    }
 		    else
 		    {
 			if (c.get_suit() != Globals.HEARTS)
